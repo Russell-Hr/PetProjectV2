@@ -16,11 +16,11 @@ public class FindUserReceiptCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Validator validator = new Validator();
-        String address = null;
+        String address;
         if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
             return "index.jsp";
         } else {
-            address = validator.validateRoleAddress(req, resp, address);
+            address = validator.validateRoleAddress(req, resp, req.getParameter("address"));
         }
 
         int page = 1;
@@ -31,7 +31,7 @@ public class FindUserReceiptCommand implements Command {
         int userId = 0;
         int sortColumnNumber = 0;
         String toPoint = null;
-        String status = null;
+        String status;
         Date createDate = null;
         Date paymentDate = null;
         Date deliveryDate = null;

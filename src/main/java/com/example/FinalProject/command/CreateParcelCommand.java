@@ -17,11 +17,11 @@ public class CreateParcelCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Validator validator = new Validator();
-        String address = null;
+        String address;
         if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
             return "index.jsp";
         } else {
-            address = validator.validateRoleAddress(req, resp, address);
+            address = validator.validateRoleAddress(req, resp, req.getParameter("address"));
         }
         String fromPoint = req.getParameter("fromPoint");
         String toPoint = req.getParameter("toPoint");

@@ -1,12 +1,12 @@
 package com.example.FinalProject.command;
-import com.example.FinalProject.Constants;
+
 import com.example.FinalProject.DBException;
 import com.example.FinalProject.entity.Parcel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 public class CalculateParcelCommand implements Command {
     private static final Logger log = LogManager.getLogger(CalculateParcelCommand.class);
     @Override

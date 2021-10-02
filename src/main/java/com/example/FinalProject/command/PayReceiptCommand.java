@@ -21,7 +21,7 @@ public class PayReceiptCommand implements Command {
         if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
             return "index.jsp";
         } else {
-            address = validator.validateRoleAddress(req, resp, address);
+            address = validator.validateRoleAddress(req, resp, req.getParameter("address"));
         }
         if (req.getParameter("userId") != null) {
             userId = Integer.parseInt(req.getParameter("userId"));

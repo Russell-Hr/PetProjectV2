@@ -19,7 +19,7 @@ public class ModifyReceiptCommand implements Command {
         if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
             return "index.jsp";
         } else {
-            address = validator.validateRoleAddress(req, resp, address);
+            address = validator.validateRoleAddress(req, resp, req.getParameter("address"));
         }
         int userId = 0;
         int receiptId = 0;
