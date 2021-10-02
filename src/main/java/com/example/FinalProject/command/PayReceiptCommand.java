@@ -1,7 +1,7 @@
 package com.example.FinalProject.command;
 
 import com.example.FinalProject.DBException;
-import com.example.FinalProject.Validator;
+import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

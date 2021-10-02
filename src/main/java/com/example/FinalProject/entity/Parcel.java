@@ -1,5 +1,7 @@
 package com.example.FinalProject.entity;
 
+import com.example.FinalProject.Constants;
+
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -34,6 +36,36 @@ public class Parcel implements Serializable, Comparable<Parcel> {
         this.height = height;
         this.weight = weight;
         this.price = price;
+    }
+
+    public static double calculatePrice(int distance, int amount, double weight) {
+        double calculatedPrice = 20;
+        if (amount > 5000) {
+            calculatedPrice = Math.ceil(calculatedPrice + 0.01 * calculatedPrice * amount / 5000);
+        }
+        if (distance > 300) {
+            calculatedPrice = Math.ceil(calculatedPrice + 0.1 * calculatedPrice * distance / 300);
+        }
+        if (weight > 15) {
+            calculatedPrice = Math.ceil(calculatedPrice + 0.01 * calculatedPrice * weight / 15);
+        }
+        return calculatedPrice;
+    }
+
+    public static int calculateDistance(String fromPoint, String toPoint) {
+        int calculatedDistance = 0;
+        int indexFromPoint = 0;
+        int indexToPoint = 0;
+        for (int i = 0; i < Constants.CITIES.length; i++) {
+            if (fromPoint.equals(Constants.CITIES[i])) {
+                indexFromPoint = i;
+            }
+            if (toPoint.equals(Constants.CITIES[i])) {
+                indexToPoint = i;
+            }
+        }
+        calculatedDistance = Constants.DISTANCES[indexFromPoint][indexToPoint];
+        return calculatedDistance;
     }
 
     public int getId() {
@@ -132,7 +164,9 @@ public class Parcel implements Serializable, Comparable<Parcel> {
         this.status = status;
     }
 
-    public int getUserId() { return userId; }
+    public int getUserId() {
+        return userId;
+    }
 
     public void setUserId(int userId) {
         this.userId = userId;

@@ -1,5 +1,7 @@
-package com.example.FinalProject;
+package com.example.FinalProject.logic;
 
+import com.example.FinalProject.DBException;
+import com.example.FinalProject.DBManager;
 import com.example.FinalProject.entity.Parcel;
 import com.example.FinalProject.entity.Receipt;
 

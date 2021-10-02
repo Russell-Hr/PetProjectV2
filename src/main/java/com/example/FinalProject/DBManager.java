@@ -39,7 +39,7 @@ public class DBManager {
     }
 
     public Connection getConnection() throws SQLException {
-        System.out.println("GetConnection");
+        //System.out.println("GetConnection");
         return ds.getConnection();
     }
 
@@ -246,7 +246,7 @@ public class DBManager {
                     pstmt.setInt(k++, id);
                     break;
             }
-            System.out.println("Modify receipt PSTMT==>" + pstmt);
+            //System.out.println("Modify receipt PSTMT==>" + pstmt);
             res = pstmt.executeUpdate() > 0;
         } finally {
             close(pstmt);
@@ -291,7 +291,7 @@ public class DBManager {
             }
             if ((status != null) && !(status.equals("All"))) {
                 pstmt.setString(k++, status);
-                System.out.println("status ==>" + status);
+                //System.out.println("status ==>" + status);
             }
             if (createDate != null) {
                 pstmt.setDate(k++, createDate);
@@ -299,7 +299,7 @@ public class DBManager {
             if (paymentDate != null) {
                 pstmt.setDate(k++, paymentDate);
             }
-            System.out.println("DBM Receipt pstmt " + pstmt);
+            //System.out.println("DBM Receipt pstmt " + pstmt);
             //pstmt.setInt(k++, "%" + escapeForLike(userId) + "%");
             rs = pstmt.executeQuery();
 
@@ -309,10 +309,6 @@ public class DBManager {
         } finally {
             close(rs);
             close(pstmt);
-        }
-        for (Receipt r : receipts
-        ) {
-            System.out.println("Receipts" + r.toString());
         }
         return receipts;
     }
@@ -358,7 +354,7 @@ public class DBManager {
             }
             if ((status != null) && !(status.equals("All"))) {
                 pstmt.setString(k++, status);
-                System.out.println("status ==>" + status);
+                //System.out.println("status ==>" + status);
             }
             if (createDate != null) {
                 pstmt.setDate(k++, createDate);
@@ -379,10 +375,6 @@ public class DBManager {
         } finally {
             close(rs);
             close(pstmt);
-        }
-        for (Parcel p : parcels
-        ) {
-            System.out.println("Parcel" + p.toString());
         }
         return parcels;
     }

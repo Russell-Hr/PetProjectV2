@@ -21,6 +21,7 @@ public class CommandContainer {
         commands.put("payReceipt", new PayReceiptCommand());
         commands.put("providePayReceipt", new ProvidePayReceiptCommand());
         commands.put("modifyReceipt", new ModifyReceiptCommand());
+        commands.put("setLang", new SetLanguageCommand());
     }
     public static Command   getCommand(String commandName) {
         return commands.get(commandName);

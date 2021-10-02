@@ -2,7 +2,7 @@ package com.example.FinalProject.command;
 
 import com.example.FinalProject.DBException;
 import com.example.FinalProject.entity.User;
-import com.example.FinalProject.UserManager;
+import com.example.FinalProject.logic.UserManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +13,7 @@ public class RegistrationCommand implements Command {
     private static final Logger log = LogManager.getLogger(RegistrationCommand.class);
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
-        String address = "index.jsp";
+        String address = "main.jsp";
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String login = req.getParameter("login");

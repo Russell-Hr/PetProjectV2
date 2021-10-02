@@ -76,7 +76,5 @@ public class User implements Serializable {
                 ", login='" + login + '\'' +
                 ", role='" + role + '\'' +
                 "}";
-
-        //return "User [id=" + id + ", login=" + login + ", name=" + name + ", role=" + role + "]";
     }
 }

@@ -1,4 +1,4 @@
-package com.example.FinalProject;
+package com.example.FinalProject.logic;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.List;
 
+import com.example.FinalProject.DBException;
+import com.example.FinalProject.DBManager;
 import com.example.FinalProject.entity.Parcel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

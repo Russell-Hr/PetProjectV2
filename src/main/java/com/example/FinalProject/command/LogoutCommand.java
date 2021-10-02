@@ -12,7 +12,6 @@ public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         String address = "index.jsp";
-            req.getSession().removeAttribute("loggedUser");
             req.getSession().invalidate();
         return address;
     }

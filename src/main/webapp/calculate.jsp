@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,7 @@
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="index.jsp">Головна</a>
+                        <a href="main.jsp">Головна</a>
                     </li>
                     <li>
                         <a href="#">Тарифи</a>

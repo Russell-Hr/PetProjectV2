@@ -1,11 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>login</title>
 </head>
 <body>
-
+<fmt:setLocale value="${lang}"/>
+<fmt:bundle basename="header">
 <link rel="stylesheet" href="Style/login.css">
 <header>
     <div class="container">
@@ -17,16 +19,16 @@
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="index.jsp">Головна</a>
+                        <a href="main.jsp"><fmt:message key="msg.main"/></a>
                     </li>
                     <li>
-                        <a href="#">Тарифи</a>
+                        <a href="#"><fmt:message key="msg.tariffs"/></a>
                     </li>
                     <li>
-                        <a href="#">Про нас</a>
+                        <a href="#"><fmt:message key="msg.about-us"/></a>
                     </li>
                     <li>
-                        <a href="#">Контакти</a>
+                        <a href="#"><fmt:message key="msg.contacts"/></a>
                     </li>
                 </ul>
             </nav>
@@ -46,18 +48,18 @@
 
         <div class="input_lines">
             <div class="field">
-                <label for="login">Login: </label>
-                <input class="input_line" name="login">
+                <label for="login"><fmt:message key="msg.login"/>: </label>
+                <input class="input_line" id="login" name="login">
             </div>
 
             <div class="field">
-                <label for="password">Password:</label>
-                <input class="input_line" type="password" name="password"/>
+                <label for="password"><fmt:message key="msg.password"/>:</label>
+                <input class="input_line" type="password" id="password" name="password"/>
 
             </div>
 
             <div class="field">
-                <input class="button_center" type=submit value="Login"/>
+                <input class="button_center" type=submit value="<fmt:message key="msg.enter"/>"/>
             </div>
 
         </div>
@@ -65,5 +67,6 @@
     </form>
     <br/>
 </header>
+</fmt:bundle>
 </body>
 </html>

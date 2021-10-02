@@ -1,5 +1,6 @@
-package com.example.FinalProject;
+package com.example.FinalProject.logic;
 
+import com.example.FinalProject.DBException;
 import com.example.FinalProject.command.Command;
 import com.example.FinalProject.command.CommandContainer;
 

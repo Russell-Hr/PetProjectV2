@@ -118,12 +118,9 @@
                             <td>${i}</td>
                         </c:when>
                         <c:otherwise>
-
                             <td>
                                 <a href="${pageContext.request.contextPath}/controller?page=${i}&command=findParcels&sortColumnNumber=${sortColumnNumber}&address=all_parcel.jsp">${i}</a>
                             </td>
-
-
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>

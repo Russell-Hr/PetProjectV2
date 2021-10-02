@@ -1,4 +1,4 @@
-package com.example.FinalProject;
+package com.example.FinalProject.logic;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,7 +42,7 @@ public class Validator {
     }
 
     public boolean validateCreditCard(String cardNumber, String expireDate) {
-        boolean validation = false;
+        boolean validation;
         int[] ints = new int[cardNumber.length()];
         for (int i = 0; i < cardNumber.length(); i++) {
             ints[i] = Integer.parseInt(cardNumber.substring(i, i + 1));

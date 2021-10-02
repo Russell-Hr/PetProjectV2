@@ -1,4 +1,6 @@
-package com.example.FinalProject;
+package com.example.FinalProject.logic;
+
+import com.example.FinalProject.Constants;
 
 import java.io.*;
 import javax.servlet.ServletException;
@@ -7,7 +9,7 @@ import javax.servlet.annotation.*;
 
 @WebServlet(name = "getCityServlet", value = "/get-city-servlet")
 public class GetCityServlet extends HttpServlet {
-    public String[] cities=Constants.CITIES;
+    public String[] cities= Constants.CITIES;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=UTF-8");

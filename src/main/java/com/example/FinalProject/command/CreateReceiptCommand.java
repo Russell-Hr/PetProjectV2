@@ -2,6 +2,9 @@ package com.example.FinalProject.command;
 
 import com.example.FinalProject.*;
 import com.example.FinalProject.entity.Receipt;
+import com.example.FinalProject.logic.ParcelManager;
+import com.example.FinalProject.logic.ReceiptManager;
+import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

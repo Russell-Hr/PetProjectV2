@@ -19,7 +19,7 @@ header {
     padding-bottom: 225px;
 }
 
-.container {
+.containerr {
     width: 1400px;
     margin: 0 auto;
 }
@@ -169,6 +169,38 @@ label {
     float: right;
 }
 
+.input_line_mini {
+    background: #fee17b;
+    color: #484543;
+    border-radius: 8px;
+/ / display: block;
+/ / width: 240 px;
+    padding: 4px 0;
+    margin: 0 auto;
+    text-decoration: none;
+    text-align: center;
+/ / text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+.input_line_right {
+    background: #fee17b;
+    color: #484543;
+    border-radius: 8px;
+    display: block;
+    width: 240px;
+    padding: 10px 0;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-decoration: none;
+    text-align: center;
+
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 30px;
+    float: right;
+}
 .title {
     padding-top: 115px;
 }

@@ -1,4 +1,4 @@
-package com.example.FinalProject;
+package com.example.FinalProject.logic;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -60,7 +60,7 @@ public class PageFilter implements Filter {
                 if (((pageUri.contains("my_")) && !(session.getAttribute("role").equals("user")) ||
                         ((pageUri.contains("all_")) && !(session.getAttribute("role").equals("manager"))))) {
                     ServletContext ctx = filterConfig.getServletContext();
-                    RequestDispatcher dispatcher = ctx.getRequestDispatcher("/index.jsp");
+                    RequestDispatcher dispatcher = ctx.getRequestDispatcher("/main.jsp");
                     req.getSession().invalidate();
                     dispatcher.forward(request, response);
                     return;

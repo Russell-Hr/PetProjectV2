@@ -30,7 +30,7 @@
                         <a href="my_receipt_start.jsp">Квитанції</a>
                     </li>
                     <li>
-                        <a href="index.jsp">Вийти</a>
+                        <a href="main.jsp">Вийти</a>
                     </li>
                 </ul>
             </nav>

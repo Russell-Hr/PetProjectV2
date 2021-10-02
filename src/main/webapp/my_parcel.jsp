@@ -60,9 +60,7 @@
         </select>
         <button type="submit" class="btn btn-secondary">Знайти</button>
     </div>
-
     </form>
-
 
     <div class="container">
         <div class="groups">

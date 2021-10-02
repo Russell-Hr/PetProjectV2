@@ -1,5 +1,7 @@
-package com.example.FinalProject;
+package com.example.FinalProject.logic;
 
+import com.example.FinalProject.DBException;
+import com.example.FinalProject.DBManager;
 import com.example.FinalProject.entity.User;
 
 import java.sql.Connection;
@@ -8,8 +10,6 @@ import java.sql.SQLException;
 public class UserManager {
 
     private DBManager dbManager;
-
-    ////////////////////////////////
 
     private static UserManager instance;
 
@@ -24,17 +24,14 @@ public class UserManager {
         dbManager = DBManager.getInstance();
     }
 
-    ////////////////////////////////
-
     public User getUser(String login) throws DBException {
         User user = null;
         Connection con = null;
-        System.out.println("Im here");
         try {
             con = dbManager.getConnection();
             user = dbManager.getUser(con, login);
             con.commit();
-            System.out.println("commit");
+            //System.out.println("commit");
         } catch (SQLException ex) {
             // (1) write to log
             // LOG.error("cannot do getUser", ex);
@@ -72,9 +69,4 @@ public class UserManager {
         }
         return res;
     }
-
-
-
-/////////////////////////////////////
-
 }

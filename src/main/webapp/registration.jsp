@@ -16,7 +16,7 @@
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="index.jsp">Головна</a>
+                        <a href="main.jsp">Головна</a>
                     </li>
                     <li>
                         <a href="#">Тарифи</a>
