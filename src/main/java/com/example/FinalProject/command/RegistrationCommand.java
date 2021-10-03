@@ -18,9 +18,10 @@ public class RegistrationCommand implements Command {
         String surname = req.getParameter("surname");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        String password2 = req.getParameter("password2");
         UserManager userManager = UserManager.getInstance();
         User user = userManager.getUser(login);
-        if (user != null && user.getPassword().equals(password)) {
+        if ((user != null && user.getPassword().equals(password)) || !(password.equals(password2))){
             address = "error.jsp";
         } else {
             user = User.createUser(name, surname, login, password, "user");

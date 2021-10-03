@@ -11,7 +11,8 @@
 <header>
     <div class="container">
         <div class="heading clearfix">
-            <a href="${pageContext.request.contextPath}/calculation-servlet"><img src="img/logo.png" alt="" class="logo"></a>
+            <a href="${pageContext.request.contextPath}/calculation-servlet"><img src="img/logo.png" alt=""
+                                                                                  class="logo"></a>
 
             <nav>
                 <ul class="menu">
@@ -40,39 +41,40 @@
         <div class="input_lines">
             <div class="field">
                 <label for="name">Ім'я: </label>
-                <input class="input_line" type="text" id="name" name="name">
+                <input class="input_line" type="text" id="name" name="name" pattern="[A-Za-zА-Яа-яЄєІіЇї]{2,20}" required/>
             </div>
 
             <div class="field">
                 <label for="surname">Прізвище:</label>
-                <input class="input_line" type="text" id="surname" name="surname"/>
+                <input class="input_line" type="text" id="surname" name="surname" pattern="[A-Za-zА-Яа-яЄєІіЇї]{2,20}"
+                       required/>
             </div>
-
 
             <div class="input_lines">
                 <div class="field">
                     <label for="login">Логін: </label>
-                    <input class="input_line" type="text" id="login" name="login">
+                    <input class="input_line" type="text" id="login" name="login" pattern="[A-Za-z]{5,20}" required/>
                 </div>
 
                 <div class="field">
                     <label for="password">Пароль:</label>
-                    <input class="input_line" type="password" id="password" name="password"/>
+                    <input class="input_line" type="password" id="password" name="password" pattern="[A-Za-z]{5,20}"
+                           required/>
                 </div>
 
                 <div class="input_lines">
                     <div class="field">
                         <label for="password2">Підтвердити пароль: </label>
-                        <input class="input_line" type="password" id="password2" name="password2">
+                        <input class="input_line" type="password" id="password2" name="password2"
+                               pattern="[A-Za-z]{5,20}" required/>
                     </div>
-
-                        <input class="button_center" type=submit value="Зареєструватись"/>
-                    </div>
+                    <input class="button_center" type=submit value="Зареєструватись"/>
                 </div>
             </div>
-            </form>
-            <br/>
         </div>
+        </form>
+        <br/>
+    </div>
     </div>
 </header>
 </body>

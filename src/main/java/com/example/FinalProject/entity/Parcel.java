@@ -27,18 +27,16 @@ public class Parcel implements Serializable, Comparable<Parcel> {
     public Parcel() {
     }
 
-    public Parcel(String fromPoint, String toPoint, int distance, int length, int width, int height, double weight, double price) {
+    public Parcel(String fromPoint, String toPoint, int length, int width, int height, double weight) {
         this.fromPoint = fromPoint;
         this.toPoint = toPoint;
-        this.distance = distance;
         this.length = length;
         this.width = width;
         this.height = height;
         this.weight = weight;
-        this.price = price;
     }
 
-    public static double calculatePrice(int distance, int amount, double weight) {
+    public double calculatePrice(int distance, int amount, double weight) {
         double calculatedPrice = 20;
         if (amount > 5000) {
             calculatedPrice = Math.ceil(calculatedPrice + 0.01 * calculatedPrice * amount / 5000);
@@ -52,7 +50,7 @@ public class Parcel implements Serializable, Comparable<Parcel> {
         return calculatedPrice;
     }
 
-    public static int calculateDistance(String fromPoint, String toPoint) {
+    public int calculateDistance(String fromPoint, String toPoint) {
         int calculatedDistance = 0;
         int indexFromPoint = 0;
         int indexToPoint = 0;

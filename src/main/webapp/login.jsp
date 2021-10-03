@@ -49,12 +49,12 @@
         <div class="input_lines">
             <div class="field">
                 <label for="login"><fmt:message key="msg.login"/>: </label>
-                <input class="input_line" id="login" name="login">
+                <input class="input_line" id="login" name="login" pattern="[A-Za-z]{5,20}" required />
             </div>
 
             <div class="field">
                 <label for="password"><fmt:message key="msg.password"/>:</label>
-                <input class="input_line" type="password" id="password" name="password"/>
+                <input class="input_line" type="password" id="password" name="password" pattern="[A-Za-z]{5,20}" required />
 
             </div>
 

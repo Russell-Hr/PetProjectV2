@@ -77,17 +77,18 @@
             <div class="row">
                 <div class="col-xl-6">
                     Вулиця:
-                    <input class="input_line_mini" type="text" id="street" name="street">
+                    <input class="input_line_mini" type="text" id="street" name="street"
+                           pattern="[0-9A-Za-zА-Яа-яЁё]{2,20}" required/>
                 </div>
 
                 <div class="col-xl-3">
                     Дім:
-                    <input class="input_line_mini" type="number" id="house" name="house" min="1" max="3000">
+                    <input class="input_line_mini" type="number" id="house" name="house" min="1" max="3000"/>
                 </div>
 
                 <div class="col-xl-3">
                     Квартира:
-                    <input class="input_line_mini" type="number" id="flat" name="flat" min="1" max="3000">
+                    <input class="input_line_mini" type="number" id="flat" name="flat" min="1" max="3000"/>
                 </div>
 
             </div>
@@ -95,12 +96,14 @@
             <div class="row">
                 <div class="col-xl-6">
                     <h6>Прізвище:</h6>
-                    <input class="input_line_mini" type="text" id="surnameR" name="surnameR">
+                    <input class="input_line_mini" type="text" id="surnameR" name="surnameR"
+                           pattern="[A-Za-zА-Яа-яЄєІіЇї]{2,20}" required/>
                 </div>
 
                 <div class="col-xl-6">
                     <h6>Ім'я:</h6>
-                    <input class="input_line_mini" type="text" id="nameR" name="nameR">
+                    <input class="input_line_mini" type="text" id="nameR" name="nameR"
+                           pattern="[A-Za-zА-Яа-яЄєІіЇї]{2,20}" required/>
                 </div>
 
             </div>
@@ -109,25 +112,26 @@
                 <div class="col-xl-3">
                     Довжина, см:
                     <input class="input_line_mini" type="number" id="length" name="length" min="1" max="3000"
-                           value=${calculatedParcel.length != null ? calculatedParcel.length : 0}>
+                           value=${calculatedParcel.length != null ? calculatedParcel.length : 0}/>
                 </div>
 
                 <div class="col-xl-3">
                     Ширина, см:
                     <input class="input_line_mini" type="number" id="width" name="width" min="1" max="3000"
-                           value=${calculatedParcel.width != null ? calculatedParcel.width : 0}>
+                           value=${calculatedParcel.width != null ? calculatedParcel.width : 0}/>
                 </div>
 
                 <div class="col-xl-3">
                     Висота, см:
                     <input class="input_line_mini" type="number" id="height" name="height" min="1" max="3000"
-                           value=${calculatedParcel.height != null ? calculatedParcel.height : 0}>
+                           value=${calculatedParcel.height != null ? calculatedParcel.height : 0}/>
                 </div>
 
                 <div class="col-xl-3">
                     Вага, кг:
-                    <input class="input_line_mini" type="number" id="weight" name="weight" min="0.5" max="500" step="0.5"
-                           value=${calculatedParcel.weight  != null ? calculatedParcel.weight : 0}>
+                    <input class="input_line_mini" type="number" id="weight" name="weight" min="0.5" max="500"
+                           step="0.5"
+                           value=${calculatedParcel.weight  != null ? calculatedParcel.weight : 0}/>
                 </div>
             </div>
             <div class="row">

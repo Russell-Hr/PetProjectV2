@@ -35,16 +35,18 @@ public class CreateParcelCommand implements Command {
         double weight = Double.parseDouble(req.getParameter("weight"));
         int userId = Integer.parseInt(req.getParameter("userId"));
         int amount = length * width * height;
-        int distance = Parcel.calculateDistance(fromPoint, toPoint);
-        double price = Parcel.calculatePrice(distance, amount, weight);
+        Parcel parcel = new Parcel(fromPoint, toPoint, length, width, height, weight);
+        int distance = parcel.calculateDistance(fromPoint, toPoint);
+        double price = parcel.calculatePrice(distance, amount, weight);
+        parcel.setDistance(distance);
+        parcel.setPrice(price);
+        parcel.setDeliveryAddress(deliveryAddress);
+        parcel.setCategory(category);
+        parcel.setUserId(userId);
+        parcel.setCreateDate(new Date(System.currentTimeMillis()));
+        //System.out.println("CreateParcelCommand" + parcel.getUserId());
         if (distance != 0 && userId != 0 && amount != 0 && weight != 0 && price != 0) {
             ParcelManager parcelManager = ParcelManager.getInstance();
-            Parcel parcel = new Parcel(fromPoint, toPoint, distance, length, width, height, weight, price);
-            parcel.setDeliveryAddress(deliveryAddress);
-            parcel.setCategory(category);
-            parcel.setUserId(userId);
-            parcel.setCreateDate(new Date(System.currentTimeMillis()));
-            //System.out.println("CreateParcelCommand" + parcel.getUserId());
             parcelManager.setParcel(parcel);
         }
         return address;
