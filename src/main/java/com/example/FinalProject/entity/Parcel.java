@@ -1,10 +1,12 @@
 package com.example.FinalProject.entity;
 
 import com.example.FinalProject.Constants;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.sql.Date;
 
+@Component
 public class Parcel implements Serializable, Comparable<Parcel> {
     private int id;
     private String fromPoint;

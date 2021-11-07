@@ -5,14 +5,16 @@ import com.example.FinalProject.logic.ReceiptManager;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-
-public class ModifyReceiptCommand implements Command {
+@Controller
+public class ModifyReceiptCommand {
     private static final Logger log = LogManager.getLogger(ModifyReceiptCommand.class);
-    @Override
+    @PostMapping(value = "/modifyReceipt")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException, SQLException {
         Validator validator = new Validator();
         String address = null;

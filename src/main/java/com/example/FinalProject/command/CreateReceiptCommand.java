@@ -7,16 +7,19 @@ import com.example.FinalProject.logic.ReceiptManager;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
-
-public class CreateReceiptCommand implements Command {
+@Controller
+public class CreateReceiptCommand {
     private static final Logger log = LogManager.getLogger(CreateReceiptCommand.class);
-    @Override
+    @PostMapping(value = "/createReceipt")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException, SQLException {
         int userId = 0;
         int sortColumnNumber = 1;

@@ -6,15 +6,18 @@ import com.example.FinalProject.logic.ParcelManager;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
-
-public class CreateParcelCommand implements Command {
+@Controller
+public class CreateParcelCommand {
     private static final Logger log = LogManager.getLogger(CreateParcelCommand.class);
 
-    @Override
+    @PostMapping(value="/createParcel")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Validator validator = new Validator();
         String address;
@@ -44,7 +47,7 @@ public class CreateParcelCommand implements Command {
         parcel.setCategory(category);
         parcel.setUserId(userId);
         parcel.setCreateDate(new Date(System.currentTimeMillis()));
-        //System.out.println("CreateParcelCommand" + parcel.getUserId());
+        System.out.println("CreateParcelCommand" + parcel.getUserId());
         if (distance != 0 && userId != 0 && amount != 0 && weight != 0 && price != 0) {
             ParcelManager parcelManager = ParcelManager.getInstance();
             parcelManager.setParcel(parcel);

@@ -1,7 +1,12 @@
 package com.example.FinalProject.entity;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
+@Component
 public class Receipt {
     private int id;
     private int parcelId;
@@ -16,7 +21,14 @@ public class Receipt {
     private String infoRoute;
 
     public static Receipt createReceipt(String status) {
+//        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+//                "applicationContextMVC.xml"
+//        );
+//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
+//                SpringConfiguration.class
+//        );
         Receipt r = new Receipt();
+        //Receipt r = context.getBean(Receipt.class);
         r.setStatus(status);
         return r;
     }

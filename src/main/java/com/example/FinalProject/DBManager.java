@@ -3,6 +3,7 @@ package com.example.FinalProject;
 import com.example.FinalProject.entity.Parcel;
 import com.example.FinalProject.entity.Receipt;
 import com.example.FinalProject.entity.User;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -397,6 +398,10 @@ public class DBManager {
     }
 
     private Parcel mapParcel(ResultSet rs) throws SQLException {
+//        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+//                "applicationContextMVC.xml"
+//        );
+//        Parcel parcel = context.getBean(Parcel.class);
         Parcel parcel = new Parcel();
         parcel.setId(rs.getInt(ID));
         parcel.setFromPoint(rs.getString(FROM_POINT));

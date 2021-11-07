@@ -6,6 +6,9 @@ import com.example.FinalProject.logic.ParcelManager;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,11 +17,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class FindUserParcelCommand implements Command {
+@Controller
+public class FindUserParcelCommand {
     private static final Logger log = LogManager.getLogger(FindUserParcelCommand.class);
     public String[] cities = Constants.CITIES;
-    @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException {
+
+    @GetMapping(value = "/findParcels")
+    public String execute (HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException {
         Validator validator = new Validator();
         String address;
         if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {

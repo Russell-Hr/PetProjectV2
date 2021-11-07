@@ -5,15 +5,17 @@ import com.example.FinalProject.logic.ReceiptManager;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.List;
-
-public class FindUserReceiptCommand implements Command {
+@Controller
+public class FindUserReceiptCommand {
     private static final Logger log = LogManager.getLogger(FindUserReceiptCommand.class);
-    @Override
+    @GetMapping(value = "/findReceipts")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Validator validator = new Validator();
         String address;

@@ -4,14 +4,16 @@ import com.example.FinalProject.DBException;
 import com.example.FinalProject.entity.Parcel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-public class CalculateParcelCommand implements Command {
+@Controller
+public class CalculateParcelCommand {
     private static final Logger log = LogManager.getLogger(CalculateParcelCommand.class);
 
-    @Override
+    @GetMapping(value = "/calculate")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         String address = "/get-city-servlet";
         String fromPoint = req.getParameter("fromPoint");

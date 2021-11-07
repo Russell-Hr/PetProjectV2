@@ -5,13 +5,16 @@ import com.example.FinalProject.logic.ParcelManager;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-public class ModifyParcelCommand implements Command {
+@Controller
+public class ModifyParcelCommand {
     private static final Logger log = LogManager.getLogger(ModifyParcelCommand.class);
-    @Override
+    @PostMapping(value = "/modifyParcel")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Validator validator = new Validator();
         String address;

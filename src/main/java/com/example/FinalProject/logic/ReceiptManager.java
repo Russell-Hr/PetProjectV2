@@ -4,6 +4,8 @@ import com.example.FinalProject.DBException;
 import com.example.FinalProject.DBManager;
 import com.example.FinalProject.entity.Parcel;
 import com.example.FinalProject.entity.Receipt;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -11,9 +13,8 @@ import java.sql.Date;
 import java.util.List;
 
 public class ReceiptManager {
-
     private DBManager dbManager;
-
+    private static final Logger log = LogManager.getLogger(ParcelManager.class);
     private static ReceiptManager instance;
     public static synchronized ReceiptManager getInstance() {
         if (instance == null) {
@@ -47,9 +48,8 @@ public class ReceiptManager {
             con.commit();
             receipt.setId((int) id);
         } catch (SQLException ex) {
-            // (1) write to log
+            log.error("cannot do addReceipt", ex);
             con.rollback();
-            // (2)
             new DBException("Cannot add a receipt with id:" + receipt.getId(), ex);
         } finally {
             dbManager.close(con);
@@ -62,17 +62,12 @@ public class ReceiptManager {
         Connection con = null;
         try {
             con = dbManager.getConnection();
-            System.out.println("RM:findReceiptsByUserID:userID==" + userId);
             receipts = dbManager.findReceiptsByUser(con, id, userId, status, createDate, paymentDate);
         } catch (SQLException ex) {
-            // (1) write to log
+            log.error("cannot do findReceiptByUser", ex);
             ex.printStackTrace();
-            // log.error("Cannot obtain a p", ex);
-            // (2)
             throw new DBException("Cannot get a receipts", ex);
         } finally {
-            // Sonar warning
-            // create and use separate methods to close each specific type of resource
             dbManager.close(con);
         }
         for (int i = 0; i < receipts.size(); i++) {
@@ -108,7 +103,6 @@ public class ReceiptManager {
                 parcelStatus = "Ordered";
                 break;
         }
-        System.out.println("Receipt Manager ==> Modify receipt");
         Connection con = null;
         try {
             con = dbManager.getConnection();
@@ -121,9 +115,8 @@ public class ReceiptManager {
             }
             con.commit();
         } catch (SQLException | DBException ex) {
-            // (1) write to log
+            log.error("cannot do modifyReceipt", ex);
             con.rollback();
-            // (2)
             new DBException("Cannot modify a receipt with id:" + receipts.get(0).getId(), ex);
         } finally {
             dbManager.close(con);

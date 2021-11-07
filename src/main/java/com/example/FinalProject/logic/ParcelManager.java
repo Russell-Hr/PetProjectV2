@@ -13,7 +13,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ParcelManager {
-
     private DBManager dbManager;
     private static final Logger log = LogManager.getLogger(ParcelManager.class);
     private static ParcelManager instance;
@@ -38,11 +37,8 @@ public class ParcelManager {
             con.commit();
             parcel.setId((int) id);
         } catch (SQLException ex) {
-            // (1) write to log
             log.error("cannot do setParcel", ex);
             ex.printStackTrace();
-
-            // (2)
             new DBException("Cannot add a parcel with id:" + parcel.getId(), ex);
         } finally {
             dbManager.close(con);
@@ -58,16 +54,10 @@ public class ParcelManager {
             log.info("findParcelsByUser"+ userId);
             parcels = dbManager.findParcelsByUser(con, userId, toPoint, status, createDate, paymentDate, deliveryDate);
         } catch (SQLException ex) {
-            // (1) write to log
             ex.printStackTrace();
-            // log.error("Cannot obtain a p", ex);
             log.error("cannot do findParcelsByUser", ex);
-            // (2)
-            throw new DBException("Cannot get a parcels by user ID ", ex);
+            throw new DBException("Cannot get a parcels by user", ex);
         } finally {
-            // Sonar warning
-            // create and use separate methods to close each specific type of resource
-
             dbManager.close(con);
         }
         switch (sortColumnNumber) {
@@ -115,11 +105,8 @@ public class ParcelManager {
             dbManager.modifyParcel(con, id, status);
             con.commit();
         } catch (SQLException ex) {
-            // (1) write to log
             log.error("cannot do modifyParcel", ex);
             ex.printStackTrace();
-
-            // (2)
             new DBException("Cannot modify status of parcel with id:" + id, ex);
         } finally {
             dbManager.close(con);

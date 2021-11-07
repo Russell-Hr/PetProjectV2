@@ -4,14 +4,16 @@ import com.example.FinalProject.DBException;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
-
-public class PayReceiptCommand implements Command {
+@Controller
+public class PayReceiptCommand {
     private static final Logger log = LogManager.getLogger(PayReceiptCommand.class);
-    @Override
+    @GetMapping(value = "/payReceipt")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException, SQLException {
         int userId = 0;
         int receiptId = 0;

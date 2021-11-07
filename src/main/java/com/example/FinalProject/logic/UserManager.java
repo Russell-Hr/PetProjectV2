@@ -3,14 +3,15 @@ package com.example.FinalProject.logic;
 import com.example.FinalProject.DBException;
 import com.example.FinalProject.DBManager;
 import com.example.FinalProject.entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class UserManager {
-
     private DBManager dbManager;
-
+    private static final Logger log = LogManager.getLogger(ParcelManager.class);
     private static UserManager instance;
 
     public static synchronized UserManager getInstance() {
@@ -31,15 +32,9 @@ public class UserManager {
             con = dbManager.getConnection();
             user = dbManager.getUser(con, login);
             con.commit();
-            //System.out.println("commit");
         } catch (SQLException ex) {
-            // (1) write to log
-            // LOG.error("cannot do getUser", ex);
-
-            // (2)
+            log.error("cannot do getUser", ex);
             dbManager.rollback(con);
-
-            // (3)
             throw new DBException("Cannot do getUser", ex);
         } finally {
             dbManager.close(con);
@@ -59,10 +54,8 @@ public class UserManager {
             con.commit();
             user.setId((int) id);
         } catch (SQLException ex) {
-            // (1) write to log
+            log.error("cannot do setUser", ex);
             ex.printStackTrace();
-
-            // (2)
             new DBException("Cannot add a user with login:" + user.getLogin(), ex);
         } finally {
             dbManager.close(con);
