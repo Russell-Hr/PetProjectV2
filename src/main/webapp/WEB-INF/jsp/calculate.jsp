@@ -39,7 +39,7 @@
     <form action="${pageContext.request.contextPath}/calculate" method="get"/>
     <div class="block_buttons_lines">
         <!--<input type="hidden" name="command" value="calculate"/>-->
-        <input type="hidden" name="address" value="calculate.jsp"/>
+        <input type="hidden" name="address" value="calculate_start.jsp"/>
         <div class="input_lines">
             <div class="field">
                 <label for="fromPoint">З міста: </label>

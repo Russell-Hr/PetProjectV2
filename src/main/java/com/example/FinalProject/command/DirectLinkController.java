@@ -61,4 +61,7 @@ public class DirectLinkController {
     @GetMapping(value = "/calculate_start_jsp")
     public String calculateStartJsp() { return "calculate_start.jsp"; }
 
+    @GetMapping(value = "/logo.png")
+    public String logoPng() { return "logo.png"; }
+
 }

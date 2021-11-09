@@ -23,7 +23,7 @@ public class FindUserParcelCommand {
     public String[] cities = Constants.CITIES;
 
     @GetMapping(value = "/findParcels")
-    public String execute (HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException {
+    public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException {
         Validator validator = new Validator();
         String address;
         if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
@@ -68,7 +68,11 @@ public class FindUserParcelCommand {
             deliveryDate = new java.sql.Date(date.getTime());
         }
         ParcelManager parcelManager = ParcelManager.getInstance();
+        //--------------
+        long start = System.currentTimeMillis();
         parcels = parcelManager.findParcelsByUser(userId, toPoint, status, createDate, paymentDate, deliveryDate, sortColumnNumber);
+        long stop = System.currentTimeMillis();
+        //--------------
         int startParcel = page * recPerPage - recPerPage;
         int endParcel = page * recPerPage - 1;
         if (parcels != null) {
