@@ -4,8 +4,10 @@ import com.example.FinalProject.*;
 import com.example.FinalProject.entity.Parcel;
 import com.example.FinalProject.logic.ParcelManager;
 import com.example.FinalProject.logic.Validator;
+import com.example.FinalProject.service.CalculateParcelParamService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 @Controller
 public class CreateParcelCommand {
-    private static final Logger log = LogManager.getLogger(CreateParcelCommand.class);
 
+    private static final Logger log = LogManager.getLogger(CreateParcelCommand.class);
+    private Parcel parcel;
+    private CalculateParcelParamService calcParsParamServ;
+
+    @Autowired
+    public CreateParcelCommand(Parcel parcel, CalculateParcelParamService calcParsParamServ) {
+        this.parcel = parcel;
+        this.calcParsParamServ = calcParsParamServ;
+    }
     @PostMapping(value="/createParcel")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Validator validator = new Validator();
@@ -38,9 +48,15 @@ public class CreateParcelCommand {
         double weight = Double.parseDouble(req.getParameter("weight"));
         int userId = Integer.parseInt(req.getParameter("userId"));
         int amount = length * width * height;
-        Parcel parcel = new Parcel(fromPoint, toPoint, length, width, height, weight);
-        int distance = parcel.calculateDistance(fromPoint, toPoint);
-        double price = parcel.calculatePrice(distance, amount, weight);
+        parcel.setFromPoint(fromPoint);
+        parcel.setToPoint(toPoint);
+        parcel.setLength(length);
+        parcel.setWidth(width);
+        parcel.setHeight(height);
+        parcel.setWeight(weight);
+        //Parcel parcel = new Parcel(fromPoint, toPoint, length, width, height, weight);
+        int distance = calcParsParamServ.calculateDistance(fromPoint, toPoint);
+        double price = calcParsParamServ.calculatePrice(distance, amount, weight);
         parcel.setDistance(distance);
         parcel.setPrice(price);
         parcel.setDeliveryAddress(deliveryAddress);

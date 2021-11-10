@@ -1,6 +1,7 @@
 package com.example.FinalProject.command;
 
 import com.example.FinalProject.entity.Parcel;
+import com.example.FinalProject.service.CalculateParcelParamService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class CalculateParcelCommand {
     private Parcel parcel;
+    private CalculateParcelParamService calcParsParamServ;
 
     @Autowired
-    public CalculateParcelCommand(Parcel parcel) {
+    public CalculateParcelCommand(Parcel parcel, CalculateParcelParamService calcParsParamServ) {
         this.parcel = parcel;
+        this.calcParsParamServ = calcParsParamServ;
     }
 
     private static final Logger log = LogManager.getLogger(CalculateParcelCommand.class);
@@ -32,23 +35,16 @@ public class CalculateParcelCommand {
              @RequestParam("height") int height,
              @RequestParam("weight") double weight
             ) {
-        //String address = req.getParameter("address");
-        //String fromPoint = req.getParameter("fromPoint");
-        //String toPoint = req.getParameter("toPoint");
-        //int length = Integer.parseInt(req.getParameter("length"));
-        //int width = Integer.parseInt(req.getParameter("width"));
-        //int height = Integer.parseInt(req.getParameter("height"));
-        //double weight = Double.parseDouble(req.getParameter("weight"));
+
         int amount = length * width * height;
-        //Parcel parcel = new Parcel(fromPoint, toPoint, length, width, height, weight);
         parcel.setFromPoint(fromPoint);
         parcel.setToPoint(toPoint);
         parcel.setLength(length);
         parcel.setWidth(width);
         parcel.setHeight(height);
         parcel.setWeight(weight);
-        int distance = parcel.calculateDistance(fromPoint, toPoint);
-        double price = parcel.calculatePrice(distance, amount, weight);
+        int distance = calcParsParamServ.calculateDistance(fromPoint, toPoint);
+        double price = calcParsParamServ.calculatePrice(distance, amount, weight);
         parcel.setDistance(distance);
         parcel.setPrice(price);
         if (distance != 0) {
