@@ -11,7 +11,7 @@
 
 <header>
 
-    <form class="form" action="${pageContext.request.contextPath}/getCity" method="get" name="frm1"/>
+    <form class="form" action="${pageContext.request.contextPath}/app/getCity" method="get" name="frm1"/>
     <!--<input type="hidden" name="command" value="findParcels"/>-->
     <input type="hidden" name="userId" value="${loggedUser.id}"/>
     <input type="hidden" name="address" value="my_create_parcel.jsp"/>

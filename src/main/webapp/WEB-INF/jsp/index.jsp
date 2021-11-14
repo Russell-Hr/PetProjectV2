@@ -7,7 +7,7 @@
 </head>
 <body onload="document.frm1.submit()">
 <header>
-    <form class="form" action="/FinalProject_war_exploded/setLang" method="get" name="frm1">
+    <form class="form" action="${pageContext.request.contextPath}/app/setLang" method="get" name="frm1">
         <!--<input type="hidden" name="command" value="setLang"/>-->
         <input type="hidden" name="lang" value="ukr"/>
     </form>

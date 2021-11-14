@@ -13,7 +13,7 @@
     <title>All Receipts</title>
 </head>
 <body>
-<link rel="stylesheet" href="Style/create_parcel.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Style/create_parcel.css">
 
 <header>
     <div class="containe">
@@ -24,22 +24,22 @@
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="all_parcel_start_jsp">Відправлення</a>
+                        <a href="${pageContext.request.contextPath}/app/all_parcel_start_jsp">Відправлення</a>
                     </li>
                     <li>
-                        <a href="all_order_start_jsp">Заявки</a>
+                        <a href="${pageContext.request.contextPath}/app/all_order_start_jsp">Заявки</a>
                     </li>
                     <li class="active">
                         <a href="#">Квитанції</a>
                     </li>
                     <li>
-                        <a href="all_delivery_start_jsp">Доставка</a>
+                        <a href="${pageContext.request.contextPath}/app/all_delivery_start_jsp">Доставка</a>
                     </li>
                     <li>
-                        <a href="all_report_start_jsp">Звіти</a>
+                        <a href="${pageContext.request.contextPath}/app/all_report_start_jsp">Звіти</a>
                     </li>
                     <li>
-                        <form name="callback" method="get" action="${pageContext.request.contextPath}/logout">
+                        <form name="callback" method="get" action="${pageContext.request.contextPath}/app/logout">
                             <!--<input type="hidden" name="command" value="logout"/>-->
                             <a href="#" alt="send" onclick="document.forms['callback'].submit();">Вийти</a>
                         </form>
@@ -89,7 +89,7 @@
                     <td>${receipt.paymentDate}</td>
                     <td>
                         <c:if test="${receipt.status == 'Approved'}">
-                            <form method="post" action="${pageContext.request.contextPath}/modifyReceipt">
+                            <form method="post" action="${pageContext.request.contextPath}/app/modifyReceipt">
                                 <!--<input type="hidden" name="command" value="modifyReceipt"/>-->
                                 <input type="hidden" name="address" value="all_receipt_start.jsp"/>
                                 <input type="hidden" name="userId" value="${receipt.userId}"/>
@@ -118,7 +118,7 @@
                         <c:otherwise>
 
                             <td>
-                                <a href="${pageContext.request.contextPath}/findReceipts?page=${i}&sortColumnNumber=${sortColumnNumber}&address=all_receipt.jsp">${i}</a>
+                                <a href="${pageContext.request.contextPath}/app/findReceipts?page=${i}&sortColumnNumber=${sortColumnNumber}&address=all_receipt.jsp">${i}</a>
                             </td>
 
 

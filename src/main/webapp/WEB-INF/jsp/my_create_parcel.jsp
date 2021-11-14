@@ -10,27 +10,27 @@
     <title>Creation</title>
 </head>
 <body>
-<link rel="stylesheet" href="Style/create_parcel.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Style/create_parcel.css">
 <header>
     <div class="containe">
         <div class="heading clearfix">
-            <a href="${pageContext.request.contextPath}/getCity">
+            <a href="${pageContext.request.contextPath}/app/getCity">
 
-                <img src="img/logo.png" alt="" class="logo"></a>
+                <img src="${pageContext.request.contextPath}/img/logo.png" alt="" class="logo"></a>
 
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="my_parcel_start_jsp">Мої відправлення</a>
+                        <a href="${pageContext.request.contextPath}/app/my_parcel_start_jsp">Мої відправлення</a>
                     </li>
                     <li class="active">
                         <a href="#">Створити</a>
                     </li>
                     <li>
-                        <a href="my_receipt_start_jsp">Квитанції</a>
+                        <a href="${pageContext.request.contextPath}/app/my_receipt_start_jsp">Квитанції</a>
                     </li>
                     <li>
-                        <a href="main_jsp">Вийти</a>
+                        <a href="${pageContext.request.contextPath}/app/main_jsp">Вийти</a>
                     </li>
                 </ul>
             </nav>
@@ -38,7 +38,7 @@
     </div>
     Ви зайшли як ${loggedUser.name}, ${loggedUser.surname},${loggedUser.role},${loggedUser.id}
     <h3>Створити відправлення</h3>
-    <form class="form" method="post" action="${pageContext.request.contextPath}/createParcel">
+    <form class="form" method="post" action="${pageContext.request.contextPath}/app/createParcel">
         <!--<form class="form" action="controller" method="get"/>-->
         <!--<input type="hidden" name="command" value="createParcel"/>-->
         <input type="hidden" name="userId" value="${loggedUser.id}"/>

@@ -8,18 +8,18 @@
     <title>Calculation</title>
 </head>
 <body>
-<link rel="stylesheet" href="Style/calculate.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Style/calculate.css">
 <header>
     <div class="container">
         <div class="heading clearfix">
             <a href="#">
 
-                <img src="img/logo.png" alt="" class="logo"></a>
+                <img src="${pageContext.request.contextPath}/img/logo.png" alt="" class="logo"></a>
 
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="main.jsp">Головна</a>
+                        <a href="${pageContext.request.contextPath}/app/main_jsp">Головна</a>
                     </li>
                     <li>
                         <a href="#">Тарифи</a>
@@ -36,7 +36,7 @@
     </div>
 
     <h3>Вартість перевезення, грн: ${calculatedParcel.price}</h3>
-    <form action="${pageContext.request.contextPath}/calculate" method="get"/>
+    <form action="${pageContext.request.contextPath}/app/calculate" method="get"/>
     <div class="block_buttons_lines">
         <!--<input type="hidden" name="command" value="calculate"/>-->
         <input type="hidden" name="address" value="calculate_start.jsp"/>

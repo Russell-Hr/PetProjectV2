@@ -9,14 +9,14 @@
 <body>
 <fmt:setLocale value="${lang}"/>
 <fmt:bundle basename="header">
-    <link rel="stylesheet" href="Style/login.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/login.css">
     <header>
         <div class="container">
             <div class="heading clearfix">
                 <form class="logo" name="callback" method="get"
-                      action="${pageContext.request.contextPath}/getCity">
+                      action="${pageContext.request.contextPath}/app/getCity">
                     <input type="hidden" name="address" value="calculate.jsp"/>
-                    <img src="img/logo.png" alt="send" onclick="document.forms['callback'].submit();"/>
+                    <img src="${pageContext.request.contextPath}/img/logo.png" alt="send" onclick="document.forms['callback'].submit();"/>
                 </form>
                 <nav>
                     <ul class="menu">
@@ -45,10 +45,9 @@
         </div>
 
 
-        <form action="${pageContext.request.contextPath}/login" method="post">
+        <form action="${pageContext.request.contextPath}/app/login" method="post">
 
             <div class="block_buttons_lines">
-                <!-- <input type="hidden" name="command" value="login"/></hr> -->
 
                 <div class="input_lines">
                     <div class="field">

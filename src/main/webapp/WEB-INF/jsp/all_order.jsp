@@ -13,7 +13,7 @@
     <title>All Orders</title>
 </head>
 <body>
-<link rel="stylesheet" href="Style/create_parcel.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Style/create_parcel.css">
 
 <header>
     <div class="containe">
@@ -24,22 +24,22 @@
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="all_parcel_start_jsp">Відправлення</a>
+                        <a href="${pageContext.request.contextPath}/app/all_parcel_start_jsp">Відправлення</a>
                     </li>
                     <li class="active">
                         <a href="#">Заявки</a>
                     </li>
                     <li>
-                        <a href="all_receipt_start_jsp">Квитанції</a>
+                        <a href="${pageContext.request.contextPath}/app/all_receipt_start_jsp">Квитанції</a>
                     </li>
                     <li>
-                        <a href="all_delivery_start_jsp">Доставка</a>
+                        <a href="${pageContext.request.contextPath}/app/all_delivery_start_jsp">Доставка</a>
                     </li>
                     <li>
-                        <a href="all_report_start_jsp">Звіти</a>
+                        <a href="${pageContext.request.contextPath}/app/all_report_start_jsp">Звіти</a>
                     </li>
                     <li>
-                        <form name="callback" method="get" action="${pageContext.request.contextPath}/logout">
+                        <form name="callback" method="get" action="${pageContext.request.contextPath}/app/logout">
                             <!--<input type="hidden" name="command" value="logout"/>-->
                             <a href="#" alt="send" onclick="document.forms['callback'].submit();" >Вийти</a>
                         </form>
@@ -95,7 +95,7 @@
                     <td>${parcel.status}</td>
                     <td>${parcel.createDate}</td>
                     <td>
-                        <form method="post" action="${pageContext.request.contextPath}/modifyParcel">
+                        <form method="post" action="${pageContext.request.contextPath}/app/modifyParcel">
                             <!--<input type="hidden" name="command" value="modifyParcel"/>-->
                             <input type="hidden" name="parcel_id" value="${parcel.id}"/>
                             <input type="hidden" name="managerId" value="${loggedUser.id}"/>
@@ -110,7 +110,7 @@
             </tbody>
         </table>
 
-        <form method="post" action="${pageContext.request.contextPath}/createReceipt">
+        <form method="post" action="${pageContext.request.contextPath}/app/createReceipt">
             <!--<input type="hidden" name="command" value="createReceipt"/>-->
             <input type="hidden" name="userId" value="${previousUserId}"/>
             <input type="hidden" name="managerId" value="${loggedUser.id}"/>

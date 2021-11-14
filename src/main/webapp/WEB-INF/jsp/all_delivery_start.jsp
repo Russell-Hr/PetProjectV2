@@ -10,7 +10,7 @@
 </head>
 <body onload="document.frm1.submit()">
 <header>
-    <form class="form" action="${pageContext.request.contextPath}/findParcels" method="get" name="frm1"/>
+    <form class="form" action="${pageContext.request.contextPath}/app/findParcels" method="get" name="frm1"/>
     <!--<input type="hidden" name="command" value="findParcels"/>-->
     <input type="hidden" name="status" value="Payed"/>
     <input type="hidden" name="sortColumnNumber" value="1"/>

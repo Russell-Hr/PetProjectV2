@@ -13,33 +13,33 @@
     <title>All Orders</title>
 </head>
 <body>
-<link rel="stylesheet" href="Style/create_parcel.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Style/create_parcel.css">
 
 <header>
     <div class="containe">
         <div class="heading clearfix">
             <a href="${pageContext.request.contextPath}/get-city-servlet">
-                <img src="img/logo.png" alt="" class="logo"></a>
+                <img src="${pageContext.request.contextPath}/img/logo.png" alt="" class="logo"></a>
 
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="all_parcel_start_jsp">Відправлення</a>
+                        <a href="${pageContext.request.contextPath}/app/all_parcel_start_jsp">Відправлення</a>
                     </li>
                     <li>
-                        <a href="all_order_start_jsp">Заявки</a>
+                        <a href="${pageContext.request.contextPath}/app/all_order_start_jsp">Заявки</a>
                     </li>
                     <li>
-                        <a href="all_receipt_start_jsp">Квитанції</a>
+                        <a href="${pageContext.request.contextPath}/app/all_receipt_start_jsp">Квитанції</a>
                     </li>
                     <li class="active">
                         <a href="#">Доставка</a>
                     </li>
                     <li>
-                        <a href="all_report_start_jsp">Звіти</a>
+                        <a href="${pageContext.request.contextPath}/app/all_report_start_jsp">Звіти</a>
                     </li>
                     <li>
-                        <form name="callback" method="get" action="${pageContext.request.contextPath}/logout">
+                        <form name="callback" method="get" action="${pageContext.request.contextPath}/app/logout">
                             <!--<input type="hidden" name="command" value="logout"/>-->
                             <a href="#" alt="send" onclick="document.forms['callback'].submit();">Вийти</a>
                         </form>
@@ -57,8 +57,8 @@
         <c:set value="${parcel.toPoint}" var="toCity" scope="request"></c:set>
     </c:forEach>
 
-    <form class="form" action="controller" method="get" name="frm1"/>
-    <input type="hidden" name="command" value="findParcels"/>
+    <form class="form" action="${pageContext.request.contextPath}/findParcels" method="get" name="frm1"/>
+    <!--<input type="hidden" name="command" value="findParcels"/>-->
     <input type="hidden" name="status" value="Payed"/>
     <input type="hidden" name="address" value="all_delivery.jsp"/>
     <div class="input_line_left">
@@ -116,7 +116,7 @@
                     <td>${parcel.createDate}</td>
                     <td>${parcel.createDate}</td>
                     <td>
-                        <form method="post" action="${pageContext.request.contextPath}/modifyParcel">
+                        <form method="post" action="${pageContext.request.contextPath}/app/modifyParcel">
                             <!--<input type="hidden" name="command" value="modifyParcel"/>-->
                             <input type="hidden" name="parcel_id" value="${parcel.id}"/>
                             <input type="hidden" name="status" value="Delivered"/>
@@ -140,7 +140,7 @@
                         </c:when>
                         <c:otherwise>
                             <td>
-                                <a href="${pageContext.request.contextPath}/findParcels?page=${i}&status=Payed&sortColumnNumber=${sortColumnNumber}&address=all_delivery.jsp">${i}</a>
+                                <a href="${pageContext.request.contextPath}/app/findParcels?page=${i}&status=Payed&sortColumnNumber=${sortColumnNumber}&address=all_delivery.jsp">${i}</a>
                             </td>
                         </c:otherwise>
                     </c:choose>

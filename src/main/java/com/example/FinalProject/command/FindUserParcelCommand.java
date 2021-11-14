@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.annotation.Annotation;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+
 
 @Controller
 public class FindUserParcelCommand {
@@ -23,7 +25,8 @@ public class FindUserParcelCommand {
     public String[] cities = Constants.CITIES;
 
     @GetMapping(value = "/findParcels")
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException {
+
+    public String execut(HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException {
         Validator validator = new Validator();
         String address;
         if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
@@ -72,6 +75,8 @@ public class FindUserParcelCommand {
         long start = System.currentTimeMillis();
         parcels = parcelManager.findParcelsByUser(userId, toPoint, status, createDate, paymentDate, deliveryDate, sortColumnNumber);
         long stop = System.currentTimeMillis();
+        log.debug("Time:",stop-start);
+        System.out.println("SOUTIME"+stop+start);
         //--------------
         int startParcel = page * recPerPage - recPerPage;
         int endParcel = page * recPerPage - 1;
@@ -92,5 +97,10 @@ public class FindUserParcelCommand {
         req.setAttribute("cities", cities);
         return address;
     }
+
+//    @Override
+//    public Class<? extends Annotation> annotationType() {
+//        return null;
+//    }
 }
 

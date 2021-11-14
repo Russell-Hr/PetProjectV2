@@ -9,7 +9,7 @@
 </head>
 <body onload="document.frm1.submit()">
 <header>
-    <form class="form" action="${pageContext.request.contextPath}/findParcels" method="get" name="frm1"/>
+    <form class="form" action="${pageContext.request.contextPath}/app/findParcels" method="get" name="frm1"/>
     <!--<input type="hidden" name="command" value="findParcels"/>-->
     <input type="hidden" name="status" value="Delivered"/>
     <input type="hidden" name="address" value="all_report.jsp"/>

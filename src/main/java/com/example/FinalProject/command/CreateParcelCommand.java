@@ -19,12 +19,10 @@ import java.sql.Date;
 public class CreateParcelCommand {
 
     private static final Logger log = LogManager.getLogger(CreateParcelCommand.class);
-    private Parcel parcel;
     private CalculateParcelParamService calcParsParamServ;
 
     @Autowired
-    public CreateParcelCommand(Parcel parcel, CalculateParcelParamService calcParsParamServ) {
-        this.parcel = parcel;
+    public CreateParcelCommand(CalculateParcelParamService calcParsParamServ) {
         this.calcParsParamServ = calcParsParamServ;
     }
     @PostMapping(value="/createParcel")
@@ -48,13 +46,13 @@ public class CreateParcelCommand {
         double weight = Double.parseDouble(req.getParameter("weight"));
         int userId = Integer.parseInt(req.getParameter("userId"));
         int amount = length * width * height;
+        Parcel parcel = new Parcel();
         parcel.setFromPoint(fromPoint);
         parcel.setToPoint(toPoint);
         parcel.setLength(length);
         parcel.setWidth(width);
         parcel.setHeight(height);
         parcel.setWeight(weight);
-        //Parcel parcel = new Parcel(fromPoint, toPoint, length, width, height, weight);
         int distance = calcParsParamServ.calculateDistance(fromPoint, toPoint);
         double price = calcParsParamServ.calculatePrice(distance, amount, weight);
         parcel.setDistance(distance);

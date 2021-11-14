@@ -256,6 +256,7 @@ public class DBManager {
     }
 
     public List<Receipt> findReceiptsByUser(Connection con, int id, int userId, String status, Date createDate, Date paymentDate) throws DBException, SQLException {
+
         List<Receipt> receipts = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;

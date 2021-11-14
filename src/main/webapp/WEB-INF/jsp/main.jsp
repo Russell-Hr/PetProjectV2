@@ -14,14 +14,14 @@
 <body>
 <fmt:setLocale value="${lang}"/>
 <fmt:bundle basename="header">
-    <link rel="stylesheet" href="Style/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Style/main.css">
     <header>
         <div class="containerr">
             <div class="heading clearfix">
                 <form class="logo" name="callback" method="get"
-                      action="${pageContext.request.contextPath}/getCity">
-                    <input type="hidden" name="address" value="calculate.jsp"/>
-                    <img src="img/logo.png" alt="send" onclick="document.forms['callback'].submit();"/>
+                      action="${pageContext.request.contextPath}/app/getCity">
+                    <input type="hidden" name="address" value="/calculate.jsp"/>
+                    <img src="${pageContext.request.contextPath}/img/logo.png" alt="send" onclick="document.forms['callback'].submit();"/>
                 </form>
 
                 <nav>
@@ -45,8 +45,8 @@
             <br>
             <div style="padding-left: 30px;">
 
-                <form class="form" action="controller" method="get" name="frm2"/>
-                <input type="hidden" name="command" value="setLang"/>
+                <form class="form" action="${pageContext.request.contextPath}/app/setLang" method="get" name="frm2"/>
+                <!--<input type="hidden" name="command" value="setLang"/>-->
                 <div class="btn-group btn-group-sm">
                     <button type="submit" class="btn btn-secondary" name="lang" value="ukr">Укр</button>
                     <button type="submit" class="btn btn-secondary" name="lang" value="eng">Eng</button>
@@ -65,9 +65,9 @@
         </div>
         <div class="buttons">
             <input class="button_left" type="button" name="conToDB" value="<fmt:message key="msg.registration"/>"
-                   onClick='location.href="${pageContext.request.contextPath}/registration_jsp"'>
+                   onClick='location.href="${pageContext.request.contextPath}/app/registration_jsp"'>
             <input class="button_right" type="button" name="conToDB" value="<fmt:message key="msg.enter"/>"
-                   onClick='location.href="${pageContext.request.contextPath}/login_jsp"'>
+                   onClick='location.href="${pageContext.request.contextPath}/app/login_jsp"'>
         </div>
     </header>
 </fmt:bundle>

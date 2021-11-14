@@ -12,7 +12,7 @@
     <title>All Reports</title>
 </head>
 <body>
-<link rel="stylesheet" href="Style/create_parcel.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Style/create_parcel.css">
 <header>
 
     <div class="containe">
@@ -23,22 +23,22 @@
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="all_parcel_start_jsp">Відправлення</a>
+                        <a href="${pageContext.request.contextPath}/app/all_parcel_start_jsp">Відправлення</a>
                     </li>
                     <li>
-                        <a href="all_order_start_jsp">Заявки</a>
+                        <a href="${pageContext.request.contextPath}/app/all_order_start_jsp">Заявки</a>
                     </li>
                     <li>
-                        <a href="all_receipt_start_jsp">Квитанції</a>
+                        <a href="${pageContext.request.contextPath}/app/all_receipt_start_jsp">Квитанції</a>
                     </li>
                     <li>
-                        <a href="all_delivery_start_jsp">Доставка</a>
+                        <a href="${pageContext.request.contextPath}/app/all_delivery_start_jsp">Доставка</a>
                     </li>
                     <li class="active">
                         <a href="#">Звіти</a>
                     </li>
                     <li>
-                        <form name="callback" method="get" action="${pageContext.request.contextPath}/logout">
+                        <form name="callback" method="get" action="${pageContext.request.contextPath}/app/logout">
                             <!--<input type="hidden" name="command" value="logout"/>-->
                             <a href="#" alt="send" onclick="document.forms['callback'].submit();">Вийти</a>
                         </form>
@@ -52,7 +52,7 @@
 
     <div class="containe">
         <div class="row">
-            <form class="form" action="${pageContext.request.contextPath}/findParcels" method="get" name="frm1"/>
+            <form class="form" action="${pageContext.request.contextPath}/app/findParcels" method="get" name="frm1"/>
             <!--<input type="hidden" name="command" value="findParcels"/>-->
             <input type="hidden" name="status" value="Delivered"/>
             <input type="hidden" name="address" value="all_report.jsp"/>
@@ -119,7 +119,7 @@
                         </c:when>
                         <c:otherwise>
                             <td>
-                                <a href="${pageContext.request.contextPath}/findParcels?page=${i}&status=Delivered&sortColumnNumber=${sortColumnNumber}&address=all_report.jsp">${i}</a>
+                                <a href="${pageContext.request.contextPath}/app/findParcels?page=${i}&status=Delivered&sortColumnNumber=${sortColumnNumber}&address=all_report.jsp">${i}</a>
                             </td>
                         </c:otherwise>
                     </c:choose>

@@ -40,7 +40,7 @@ public class PageFilter implements Filter {
      * @see Filter#init(FilterConfig)
      */
     @Override
-    public void init(FilterConfig fConfig) throws ServletException {
+    public void init(FilterConfig fConfig) {
         filterConfig = fConfig;
     }
 

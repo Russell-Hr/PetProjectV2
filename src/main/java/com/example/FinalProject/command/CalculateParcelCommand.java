@@ -13,12 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class CalculateParcelCommand {
-    private Parcel parcel;
     private CalculateParcelParamService calcParsParamServ;
 
     @Autowired
-    public CalculateParcelCommand(Parcel parcel, CalculateParcelParamService calcParsParamServ) {
-        this.parcel = parcel;
+    public CalculateParcelCommand(CalculateParcelParamService calcParsParamServ) {
         this.calcParsParamServ = calcParsParamServ;
     }
 
@@ -37,6 +35,7 @@ public class CalculateParcelCommand {
             ) {
 
         int amount = length * width * height;
+        Parcel parcel = new Parcel();
         parcel.setFromPoint(fromPoint);
         parcel.setToPoint(toPoint);
         parcel.setLength(length);

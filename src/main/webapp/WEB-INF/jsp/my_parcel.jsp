@@ -12,13 +12,13 @@
     <title>Parcels</title>
 </head>
 <body ononline="document.frm1.submit()">
-<link rel="stylesheet" href="Style/create_parcel.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Style/create_parcel.css">
 <header>
     <div class="containe">
         <div class="heading clearfix">
-            <a href="${pageContext.request.contextPath}/getCity">
+            <a href="${pageContext.request.contextPath}/app/getCity">
 
-                <img src="img/logo.png" alt="" class="logo"></a>
+                <img src="${pageContext.request.contextPath}/img/logo.png" alt="" class="logo"></a>
 
             <nav>
                 <ul class="menu">
@@ -26,13 +26,13 @@
                         <a href="#">Мої відправлення</a>
                     </li>
                     <li>
-                        <a href="my_create_parcel_start_jsp">Створити</a>
+                        <a href="${pageContext.request.contextPath}/app/my_create_parcel_start_jsp">Створити</a>
                     </li>
                     <li>
-                        <a href="my_receipt_start_jsp">Квитанції</a>
+                        <a href="${pageContext.request.contextPath}/app/my_receipt_start_jsp">Квитанції</a>
                     </li>
                     <li>
-                        <form name="callback" method="get" action="${pageContext.request.contextPath}/logout">
+                        <form name="callback" method="get" action="${pageContext.request.contextPath}/app/logout">
                             <!--<input type="hidden" name="command" value="logout"/>-->
                             <a href="#" alt="send" onclick="document.forms['callback'].submit();">Вийти</a>
                         </form>
@@ -43,7 +43,7 @@
     </div>
     Ви увійшли як ${loggedUser.name} ${loggedUser.surname}, ${loggedUser.role} № ${loggedUser.id}
 
-    <form class="form" action="${pageContext.request.contextPath}/findParcels" method="get" name="frm1"/>
+    <form class="form" action="${pageContext.request.contextPath}/app/findParcels" method="get" name="frm1"/>
     <!--<input type="hidden" name="command" value="findParcels"/>-->
     <input type="hidden" name="userId" value="${loggedUser.id}"/>
     <input type="hidden" name="address" value="my_parcel.jsp"/>
@@ -97,7 +97,7 @@
                             </c:if>
                             <c:if test="${parcel.status == 'Ordered'}">
                                 <div>
-                                    <form action="${pageContext.request.contextPath}/modifyParcel" method="post"/>
+                                    <form action="${pageContext.request.contextPath}/app/modifyParcel" method="post"/>
                                         <!--<input type="hidden" name="command" value="modifyParcel"/>-->
                                         <input type="hidden" name="parcel_id" value="${parcel.id}"/>
                                         <input type="hidden" name="userId" value="${loggedUser.id}"/>
@@ -110,7 +110,7 @@
                             </c:if>
                             <c:if test="${parcel.status == 'Approved'}">
                                 <div>
-                                    <form action="${pageContext.request.contextPath}/findReceipts" method="post"/>
+                                    <form action="${pageContext.request.contextPath}/app/findReceipts" method="post"/>
                                         <!--<input type="hidden" name="command" value="findReceipts"/>-->
                                         <input type="hidden" name="userId" value="${loggedUser.id}"/>
                                         <input type="hidden" name="role" value="${loggedUser.role}"/>

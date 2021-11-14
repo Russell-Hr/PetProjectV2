@@ -7,7 +7,7 @@
     <title>Payment</title>
 </head>
 <body>
-<link rel="stylesheet" href="Style/calculate.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Style/calculate.css">
 <header>
     <div class="container">
         <div class="heading clearfix">
@@ -16,16 +16,16 @@
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="my_parcel_start_jsp">Мої відправлення</a>
+                        <a href="${pageContext.request.contextPath}/app/my_parcel_start_jsp">Мої відправлення</a>
                     </li>
                     <li>
-                        <a href="my_create_parcel_jsp">Створити</a>
+                        <a href="${pageContext.request.contextPath}/app/my_create_parcel_jsp">Створити</a>
                     </li>
                     <li>
-                        <a href="my_receipt_start_jsp">Квитанції</a>
+                        <a href="${pageContext.request.contextPath}/app/my_receipt_start_jsp">Квитанції</a>
                     </li>
                     <li>
-                        <form name="callback" method="get" action="${pageContext.request.contextPath}/logout">
+                        <form name="callback" method="get" action="${pageContext.request.contextPath}/app/logout">
                             <!--<input type="hidden" name="command" value="logout"/>-->
                             <a href="#" alt="send" onclick="document.forms['callback'].submit();" >Вийти</a>
                         </form>
@@ -36,9 +36,9 @@
     </div>
 
     <h3>Платіж:</h3>
-    <form action="controller" method="get"/>
+    <form action="${pageContext.request.contextPath}/app/providePayReceipt" method="get"/>
     <div class="block_buttons_lines">
-        <input type="hidden" name="command" value="providePayReceipt"/>
+        <!--<input type="hidden" name="command" value="providePayReceipt"/>-->
         <input type="hidden" name="address" value="my_receipt_start.jsp"/>
         <input type="hidden" name="userId" value="${userId}"/>
         <input type="hidden" name="receiptId" value="${receiptId}"/>

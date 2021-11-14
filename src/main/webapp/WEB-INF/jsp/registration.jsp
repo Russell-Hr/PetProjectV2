@@ -11,22 +11,25 @@
 <header>
     <div class="container">
         <div class="heading clearfix">
-            <a href="${pageContext.request.contextPath}/calculation-servlet"><img src="${pageContext.request.contextPath}/img/logo.png" alt=""
-                                                                                  class="logo"></a>
+            <form class="logo" name="callback" method="get"
+                  action="${pageContext.request.contextPath}/app/getCity">
+                <input type="hidden" name="address" value="/calculate.jsp"/>
+                <img src="${pageContext.request.contextPath}/img/logo.png" alt="send" onclick="document.forms['callback'].submit();"/>
+            </form>
 
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="main_jsp">Головна</a>
+                        <a href="${pageContext.request.contextPath}/app/main_jsp">Головна</a>
                     </li>
                     <li>
                         <a href="#">Тарифи</a>
                     </li>
                     <li>
-                        <a href="about.html">Про нас</a>
+                        <a href="#">Про нас</a>
                     </li>
                     <li>
-                        <a href="contacts.html">Контакти</a>
+                        <a href="#">Контакти</a>
                     </li>
                 </ul>
             </nav>
@@ -34,9 +37,9 @@
     </div>
 
     <h3>Заповніть форму:</h3>
-    <form action="controller" method="get"/>
+    <form action="${pageContext.request.contextPath}/app/registration" method="get"/>
     <div class="block_buttons_lines">
-        <input type="hidden" name="command" value="registration"/>
+        <!--<input type="hidden" name="command" value="registration"/>-->
 
         <div class="input_lines">
             <div class="field">

@@ -10,7 +10,7 @@
     <title>Receipts</title>
 </head>
 <body ononline="document.frm1.submit()">
-<link rel="stylesheet" href="Style/create_parcel.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/Style/create_parcel.css">
 <header>
     <div class="containe">
         <div class="heading clearfix">
@@ -21,16 +21,16 @@
             <nav>
                 <ul class="menu">
                     <li>
-                        <a href="my_parcel_start_jsp">Мої відправлення</a>
+                        <a href="${pageContext.request.contextPath}/app/my_parcel_start_jsp">Мої відправлення</a>
                     </li>
                     <li>
-                        <a href="get-city-servlet">Створити</a>
+                        <a href="${pageContext.request.contextPath}/app/my_create_parcel_start_jsp">Створити</a>
                     </li>
                     <li class="active">
                         <a href="#">Квитанції</a>
                     </li>
                     <li>
-                        <form name="callback" method="get" action="${pageContext.request.contextPath}/logout">
+                        <form name="callback" method="get" action="${pageContext.request.contextPath}/app/logout">
                             <!--<input type="hidden" name="command" value="logout"/>-->
                             <a href="#" alt="send" onclick="document.forms['callback'].submit();" >Вийти</a>
                         </form>
@@ -40,8 +40,8 @@
         </div>
     </div>
     Ви увійшли як ${loggedUser.name} ${loggedUser.surname}, ${loggedUser.role} № ${loggedUser.id}
-    <form class="form" action="controller" method="get" name="frm1"/>
-    <input type="hidden" name="command" value="findReceipts"/>
+    <form class="form" action="${pageContext.request.contextPath}/app/findReceipts" method="get" name="frm1"/>
+    <!--<input type="hidden" name="command" value="findReceipts"/>-->
     <input type="hidden" name="userId" value="${loggedUser.id}"/>
     <input type="hidden" name="address" value="my_receipt.jsp"/>
     <div class="input_line_left">
@@ -90,8 +90,8 @@
                             <c:if test="${receipt.status == 'Approved'}">
                                 <br>
                                 <div class="btn-group">
-                                    <form>
-                                        <input type="hidden" name="command" value="modifyReceipt"/>
+                                    <form action="${pageContext.request.contextPath}/app/modifyReceipt">
+                                        <!--<input type="hidden" name="command" value="modifyReceipt"/>-->
                                         <input type="hidden" name="address" value="my_receipt_start.jsp"/>
                                         <input type="hidden" name="userId" value="${loggedUser.id}"/>
                                         <input type="hidden" name="role" value="${loggedUser.role}"/>
@@ -99,8 +99,8 @@
                                         <input type="hidden" name="receiptStatus" value="Canceled"/>
                                         <button type="submit" class="btn btn-secondary">Відмінити</button>
                                     </form>
-                                    <form>
-                                        <input type="hidden" name="command" value="payReceipt"/>
+                                    <form action="${pageContext.request.contextPath}/app/payReceipt">
+                                        <!--<input type="hidden" name="command" value="payReceipt"/>-->
                                         <input type="hidden" name="address" value="my_payment.jsp"/>
                                         <input type="hidden" name="userId" value="${loggedUser.id}"/>
                                         <input type="hidden" name="role" value="${loggedUser.role}"/>
