@@ -1,12 +1,17 @@
 package com.example.FinalProject.command;
 
+import com.example.FinalProject.annotation.Bench;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+@EnableAspectJAutoProxy
 @Controller
-public class SetLanguageCommand{
+public class SetLanguageCommand {
+    @Timed
     @GetMapping(value = "/setLang")
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
         String lang = req.getParameter("lang");

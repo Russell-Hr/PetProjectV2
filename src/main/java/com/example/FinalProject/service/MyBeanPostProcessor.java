@@ -5,11 +5,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.cglib.proxy.Proxy;
+import org.springframework.cglib.proxy.Enhancer;
+import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import java.lang.annotation.Annotation;
+import org.springframework.util.StopWatch;
+import java.lang.reflect.Method;
 
 @Component
 public class MyBeanPostProcessor implements BeanPostProcessor {
@@ -21,22 +21,26 @@ public class MyBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof Timed) {
-            return Proxy.newProxyInstance(MyBeanPostProcessor.class.getClassLoader(), new Class[]{Timed.class},
-                    (proxy, method, args) -> {
-                        long start = System.currentTimeMillis();
-                        final Object invoke = method.invoke(bean);
-                        log.info("Method was invoked. Result {}", invoke);
-                        long end = System.currentTimeMillis();
-                        log.info("Time:", end-start);
-                        return invoke;
-                    });
+        for (Method method: bean.getClass().getMethods()) {
+            if (method.isAnnotationPresent(Timed.class)) {
+                Enhancer enhancer = new Enhancer();
+                enhancer.setSuperclass(bean.getClass());
+                enhancer.setCallback((MethodInterceptor) (obj, interceptedMethod, args, proxy) -> {
+                    if (interceptedMethod.isAnnotationPresent(Timed.class)) {
+                        StopWatch timer = new StopWatch();
+                        timer.start();
+                        Object result = proxy.invokeSuper(obj, args);
+                        timer.stop();
+                        log.info("Method called: {}, Duration: {}",
+                                interceptedMethod.getName(),
+                                timer.getTotalTimeMillis());
+                        return result;
+                    }
+                    return proxy.invokeSuper(obj, args);
+                });
+                return enhancer.create();
+            }
         }
         return bean;
     }
-
-//    @Override
-//    public Class<? extends Annotation> annotationType() {
-//        return null;
-//    }
 }

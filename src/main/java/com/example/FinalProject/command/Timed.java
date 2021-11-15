@@ -1,11 +1,11 @@
 package com.example.FinalProject.command;
 
-import com.example.FinalProject.DBException;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-
-public interface Timed {
-    public String execut(HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException;
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface Timed {
 }

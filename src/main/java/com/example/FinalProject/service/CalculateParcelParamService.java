@@ -1,10 +1,12 @@
 package com.example.FinalProject.service;
 
 import com.example.FinalProject.Constants;
+import com.example.FinalProject.annotation.Bench;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CalculateParcelParamService {
+    @Bench
     public double calculatePrice(int distance, int amount, double weight) {
         double calculatedPrice = 20;
         if (amount > 5000) {

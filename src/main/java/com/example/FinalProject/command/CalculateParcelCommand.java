@@ -1,5 +1,6 @@
 package com.example.FinalProject.command;
 
+import com.example.FinalProject.annotation.Bench;
 import com.example.FinalProject.entity.Parcel;
 import com.example.FinalProject.service.CalculateParcelParamService;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,7 @@ public class CalculateParcelCommand {
     }
 
     private static final Logger log = LogManager.getLogger(CalculateParcelCommand.class);
+
 
     @GetMapping(value = "/calculate")
     public String calculateParcelCommand
@@ -51,6 +53,7 @@ public class CalculateParcelCommand {
         } else {
             req.getSession().removeAttribute("calculatedParcel");
         }
+        log.info("Calculate!!!");
         return address;
     }
 }
