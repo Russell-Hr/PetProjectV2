@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
 
 @Controller
 public class LoginCommand {
@@ -18,13 +19,8 @@ public class LoginCommand {
     @GetMapping(value = "/lugin")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         String address = "login.jsp";
-        String login = req.getParameter("username");
-        //String password = req.getParameter("password");
-        //Principal principal = req.getUserPrincipal();
-        //String login = principal.getName();
-//        Authentication authentication = null;
-//        String login = authentication.getName();
-
+        Principal principal = req.getUserPrincipal();
+        String login = principal.getName();
         UserManager userManager = UserManager.getInstance();
         User user = userManager.getUser(login);
         if (user != null && user.getPassword().equals(user.getPassword())) {
