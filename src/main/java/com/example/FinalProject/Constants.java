@@ -34,9 +34,10 @@ public enum Constants {
             {0, 396, 672, 867, 271, 747, 701, 149, 363, 951, 949, 690, 640, 529, 477, 458, 1112, 350, 568, 951, 608, 691, 455, 330, 695, 0}};
     static final String FIND_USER_BY_LOGIN =
             "select * from user where login=?";
+    static final String FIND_ALL_USERS =
+            "select * from user";
     static final String ADD_NEW_USER =
             "INSERT INTO user (role, name, surname, login, password) VALUES (?, ?, ?, ?, ?)";
-
     static final String ADD_NEW_RECEIPT =
             "INSERT INTO receipt (userId, managerId, status, total, createDate) VALUES (?, ?, ?, ?, ?)";
     static final String ADD_RECEIPT_PARCELS = "INSERT INTO receipt_has_parcel (receiptId, parcelId, price) VALUES (?, ?, ?)";

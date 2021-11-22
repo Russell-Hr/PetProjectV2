@@ -6,9 +6,7 @@ import com.example.FinalProject.logic.UserManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,14 +15,19 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginCommand {
     private static final Logger log = LogManager.getLogger(LoginCommand.class);
 
-    @PostMapping(value = "/login")
+    @GetMapping(value = "/lugin")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         String address = "login.jsp";
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
+        String login = req.getParameter("username");
+        //String password = req.getParameter("password");
+        //Principal principal = req.getUserPrincipal();
+        //String login = principal.getName();
+//        Authentication authentication = null;
+//        String login = authentication.getName();
+
         UserManager userManager = UserManager.getInstance();
         User user = userManager.getUser(login);
-        if (user != null && user.getPassword().equals(password)) {
+        if (user != null && user.getPassword().equals(user.getPassword())) {
             if (user.getRole().equals("user")) {
                 address = "my_parcel_start.jsp";
                 req.getSession().setAttribute("role", user.getRole());

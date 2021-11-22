@@ -8,11 +8,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.annotation.Annotation;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +24,7 @@ public class FindUserParcelCommand {
 
     @GetMapping(value = "/findParcels")
 
-    public String execut(HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException {
+    public String execute (HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException {
         Validator validator = new Validator();
         String address;
         if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
@@ -71,13 +69,7 @@ public class FindUserParcelCommand {
             deliveryDate = new java.sql.Date(date.getTime());
         }
         ParcelManager parcelManager = ParcelManager.getInstance();
-        //--------------
-        long start = System.currentTimeMillis();
         parcels = parcelManager.findParcelsByUser(userId, toPoint, status, createDate, paymentDate, deliveryDate, sortColumnNumber);
-        long stop = System.currentTimeMillis();
-        log.debug("Time:",stop-start);
-        System.out.println("SOUTIME"+stop+start);
-        //--------------
         int startParcel = page * recPerPage - recPerPage;
         int endParcel = page * recPerPage - 1;
         if (parcels != null) {
@@ -98,9 +90,5 @@ public class FindUserParcelCommand {
         return address;
     }
 
-//    @Override
-//    public Class<? extends Annotation> annotationType() {
-//        return null;
-//    }
 }
 

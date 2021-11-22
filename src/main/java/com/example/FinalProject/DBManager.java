@@ -3,15 +3,14 @@ package com.example.FinalProject;
 import com.example.FinalProject.entity.Parcel;
 import com.example.FinalProject.entity.Receipt;
 import com.example.FinalProject.entity.User;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.FinalProject.Constants.*;
 
@@ -100,7 +99,7 @@ public class DBManager {
         try {
             pstmt = con.prepareStatement(ADD_NEW_USER, Statement.RETURN_GENERATED_KEYS);
             int k = 1;
-            pstmt.setString(k++, user.getRole());
+            pstmt.setString(k++, String.valueOf(user.getRole()));
             pstmt.setString(k++, user.getName());
             pstmt.setString(k++, user.getSurname());
             pstmt.setString(k++, user.getLogin());
@@ -426,5 +425,44 @@ public class DBManager {
     static String escapeForLike(String param) {
         return param.replace("!", "!!").replace("%", "!%").replace("_", "!_").replace("[", "![");
     }
+
+    public List<User> findAllUsers(Connection con) throws SQLException {
+        List<User> users = new ArrayList<>();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(FIND_ALL_USERS);
+            while (rs.next()) {
+                users.add(extractUser(rs));
+            }
+        } finally {
+            close(rs);
+            close(stmt);
+        }
+        return users;
+    }
+//    public List<Product> findAllProducts() throws SQLException {
+//        List<Product> products = new ArrayList<>();
+//
+//        try (Connection con = getConnection();
+//             Statement stmt = con.createStatement();
+//             ResultSet rs = stmt.executeQuery(SQL_FIND_ALL_PRODUCTS);) {
+//
+//            while (rs.next()) {
+//                products.add(mapProduct(rs));
+//            }
+//        } catch (SQLException ex) {
+//            // (1) write to log
+//            ex.printStackTrace();
+//            // log.error("Cannot obtain a product by login", ex);
+//
+//            // (2)
+//            throw ex;
+//        }
+//        return products;
+//    }
+
+
 
 }

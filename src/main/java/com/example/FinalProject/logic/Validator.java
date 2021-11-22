@@ -20,24 +20,24 @@ public class Validator {
             address = "index.jsp";
             return address;
         }
-        if (req.getSession().getAttribute("role") == null) {
-            log.info("role == null");
-            req.getSession().invalidate();
-            address = "index.jsp";
-            return address;
-        }
-        if (!(req.getSession().getAttribute("role").equals("manager")) && address.contains("all_")) {
-            log.info("Unathorized entry: page all_...");
-            req.getSession().invalidate();
-            address = "index.jsp";
-            return address;
-        }
-        if (!(req.getSession().getAttribute("role").equals("user")) && address.contains("my_")) {
-            log.info("Unathorized entry: page my_...");
-            req.getSession().invalidate();
-            address = "index.jsp";
-            return address;
-        }
+//        if (req.getSession().getAttribute("role") == null) {
+//            log.info("role == null");
+//            req.getSession().invalidate();
+//            address = "index.jsp";
+//            return address;
+//        }
+//        if (!(req.getSession().getAttribute("role").equals("manager")) && address.contains("all_")) {
+//            log.info("Unathorized entry: page all_...");
+//            req.getSession().invalidate();
+//            address = "index.jsp";
+//            return address;
+//        }
+//        if (!(req.getSession().getAttribute("role").equals("user")) && address.contains("my_")) {
+//            log.info("Unathorized entry: page my_...");
+//            req.getSession().invalidate();
+//            address = "index.jsp";
+//            return address;
+//        }
         return address;
     }
 

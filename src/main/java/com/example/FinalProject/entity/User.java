@@ -1,9 +1,9 @@
 package com.example.FinalProject.entity;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
 
 @Component
@@ -14,16 +14,10 @@ public class User implements Serializable {
     private String login;
     private String password;
     private String role;
+    //private RoleSec roleSec;
 
     public static User createUser(String name, String surname, String login, String password, String role) {
         User user = new User();
-//        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-//                "applicationContextMVC.xml"
-//        );
-//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
-//                SpringConfiguration.class
-//        );
-//        User user = context.getBean(User.class);
         user.setName(name);
         user.setSurname(surname);
         user.setLogin(login);
