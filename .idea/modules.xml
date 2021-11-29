@@ -3,6 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FinalProject.iml" filepath="$PROJECT_DIR$/FinalProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spring-cloud-overview/eureka-server/eureka-server.iml" filepath="$PROJECT_DIR$/../spring-cloud-overview/eureka-server/eureka-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spring-cloud-overview/gateway/gateway.iml" filepath="$PROJECT_DIR$/../spring-cloud-overview/gateway/gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spring-cloud-overview/notification/notification.iml" filepath="$PROJECT_DIR$/../spring-cloud-overview/notification/notification.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spring-cloud-overview/orders/orders.iml" filepath="$PROJECT_DIR$/../spring-cloud-overview/orders/orders.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spring-cloud-overview/products/products.iml" filepath="$PROJECT_DIR$/../spring-cloud-overview/products/products.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spring-cloud-overview/spring-cloud-overview.iml" filepath="$PROJECT_DIR$/../spring-cloud-overview/spring-cloud-overview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../spring-cloud-overview/users/users.iml" filepath="$PROJECT_DIR$/../spring-cloud-overview/users/users.iml" />
     </modules>
   </component>
 </project>
