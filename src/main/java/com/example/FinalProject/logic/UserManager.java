@@ -5,13 +5,13 @@ import com.example.FinalProject.DBManager;
 import com.example.FinalProject.entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@Component
+@Service
 public class UserManager {
     private DBManager dbManager;
     private static final Logger log = LogManager.getLogger(ParcelManager.class);
@@ -24,7 +24,7 @@ public class UserManager {
         return instance;
     }
 
-    private UserManager() {
+    public UserManager() {
         dbManager = DBManager.getInstance();
     }
 

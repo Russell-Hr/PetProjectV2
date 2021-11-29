@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/app/all_**", "/app/findParcels**", "/app/lugin", "/app/logout").hasAuthority("ROLE_MANAGER")
                 .antMatchers("/app/my_**", "/app/findParcels**", "/app/lugin", "/app/logout").hasAuthority("ROLE_USER")
                 .antMatchers("/app/login**", "/app/setLang**", "/app/main**", "/app/index**", "/app/registration**").anonymous()
-                .antMatchers("/app/setLang**", "/app/getCity**", "/app/calculate_start**", "/app/calculate**", "/app/error**").permitAll()
+                .antMatchers("/app/setLang**", "/app/getCity**", "/app/calculate_start**", "/app/calculate**", "/app/error**", "/*.css", "/*.png").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

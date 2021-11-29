@@ -3,6 +3,8 @@ package com.example.FinalProject;
 import com.example.FinalProject.entity.Parcel;
 import com.example.FinalProject.entity.Receipt;
 import com.example.FinalProject.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.FinalProject.Constants.*;
-
+@Service
 public class DBManager {
 
     private DataSource ds;
@@ -25,8 +27,8 @@ public class DBManager {
         }
         return instance;
     }
-
-    private DBManager() {
+@Autowired
+    DBManager() {
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
