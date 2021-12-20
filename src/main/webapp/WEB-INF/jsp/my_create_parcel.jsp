@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +39,7 @@
     </div>
     Ви зайшли як ${loggedUser.name}, ${loggedUser.surname},${loggedUser.role},${loggedUser.id}
     <h3>Створити відправлення</h3>
-    <form class="form" method="post" action="${pageContext.request.contextPath}/app/createParcel">
+    <form class="form" method="get" action="${pageContext.request.contextPath}/app/createParcel">
         <!--<form class="form" action="controller" method="get"/>-->
         <!--<input type="hidden" name="command" value="createParcel"/>-->
         <input type="hidden" name="userId" value="${loggedUser.id}"/>

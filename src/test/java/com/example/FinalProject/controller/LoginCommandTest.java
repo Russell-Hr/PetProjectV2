@@ -3,7 +3,7 @@ package com.example.FinalProject.controller;
 import com.example.FinalProject.command.LoginCommand;
 import com.example.FinalProject.config.TestConfig;
 import com.example.FinalProject.entity.User;
-import com.example.FinalProject.logic.UserManager;
+import com.example.FinalProject.logic.UserServiceImpl;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ public class LoginCommandTest {
     private LoginCommand loginCommand;
     // mocked dependencies
     @Autowired
-    private UserManager userManager;
+    private UserServiceImpl userServiceImpl;
 
     private static final String login = "password";
     private static final User user = mock(User.class);
@@ -32,15 +32,15 @@ public class LoginCommandTest {
         when(user.getLogin()).thenReturn(login);
     }
 
-    @SneakyThrows
-    @Test
-    public void validateShouldAcceptUserWithAlreadyUsedLogin() {
-        when(userManager.getUser(login)).thenReturn(user);
-    }
+//    @SneakyThrows
+//    @Test
+//    public void validateShouldAcceptUserWithAlreadyUsedLogin() {
+//        when(userServiceImpl.getUser(login)).thenReturn(user);
+//    }
 
     @SneakyThrows
     @Test
     public void validateShouldRejectUserWithNewLogin() {
-        when(userManager.getUser(login)).thenReturn(null);
+        when(userServiceImpl.getUser(login)).thenReturn(null);
     }
 }

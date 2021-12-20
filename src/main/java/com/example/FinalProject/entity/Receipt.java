@@ -1,124 +1,97 @@
 package com.example.FinalProject.entity;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
-import java.util.Date;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-@Component
-public class Receipt {
+@Entity
+@Table(name = "receipt")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@DynamicInsert
+@DynamicUpdate
+@NamedQueries({@NamedQuery(name = "receiptsByUserIdAll",
+        query = "from Receipt r where r.userId=:userId"),
+        @NamedQuery(name = "receiptsByUserIdByStatus",
+                query = "from Receipt r where r.userId=:userId and r.status=:status")
+})
+
+//from usertable u, resulttable r where u.id = r.id and r.ispassed = true"
+
+
+
+
+public class Receipt implements Serializable {
+    //SELECT a FROM Locality a INNER JOIN a.city c WHERE c.cityId = :cityId
+    @Id
+    @Column(name = "id")
     private int id;
+    //private UUID id = UUID.randomUUID();
+
+    //@ManyToOne
+    @JoinColumn(name = "parcelId")
     private int parcelId;
+
+    @Column(name = "userId")
     private int userId;
+
+    //@Enumerated(EnumType.STRING)
+    @Column(name = "managerId")
     private int managerId;
+
+    @Column(name = "status")
     private String status;
+
+    @Column(name = "price")
     private Double price;
+
+    //@ManyToOne
+    @JoinColumn(name = "total")
     private Double total;
+
+    @Column(name = "createDate")
     private Date createDate;
+
+    @Column(name = "paymentDate")
     private Date paymentDate;
+
+    @Column(name = "infoUser")
     private String infoUser;
+
+    @Column(name = "infoRoute")
     private String infoRoute;
 
-    public static Receipt createReceipt(String status) {
-//        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
-//                "applicationContextMVC.xml"
-//        );
-//        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
-//                SpringConfiguration.class
-//        );
-        Receipt r = new Receipt();
-        //Receipt r = context.getBean(Receipt.class);
-        r.setStatus(status);
-        return r;
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "receipt_has_parcel",
+            joinColumns = @JoinColumn(name = "receiptId"),
+            inverseJoinColumns = @JoinColumn(name = "parcelId")
+    )
+    private List<Parcel> parcels = new ArrayList<>();
+
+
+
+    //Getters and setters ommitted for brevity
+
+    public void addParcel(Parcel parcel) {
+        parcels.add(parcel);
+        parcel.getReceipts().add(this);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getParcelId() {
-        return parcelId;
-    }
-
-    public void setParcelId(int parcelId) {
-        this.parcelId = parcelId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(int managerId) {
-        this.managerId = managerId;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public java.sql.Date getCreateDate() {
-        return (java.sql.Date) createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public String getInfoUser() {
-        return infoUser;
-    }
-
-    public void setInfoUser(String infoUser) {
-        this.infoUser = infoUser;
-    }
-
-    public String getInfoRoute() {
-        return infoRoute;
-    }
-
-    public void setInfoRoute(String infoRoute) {
-        this.infoRoute = infoRoute;
+    public void removeParcel(Parcel parcel) {
+        parcels.remove(parcel);
+        parcel.getReceipts().remove(this);
     }
 
     @Override

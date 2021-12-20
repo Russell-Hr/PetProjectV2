@@ -10,16 +10,6 @@
         <option value="$PROJECT_DIR$/../spring-cloud-overview/pom.xml" />
       </list>
     </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/../spring-cloud-overview/eureka-server/pom.xml" />
-        <option value="$PROJECT_DIR$/../spring-cloud-overview/gateway/pom.xml" />
-        <option value="$PROJECT_DIR$/../spring-cloud-overview/notification/pom.xml" />
-        <option value="$PROJECT_DIR$/../spring-cloud-overview/orders/pom.xml" />
-        <option value="$PROJECT_DIR$/../spring-cloud-overview/products/pom.xml" />
-        <option value="$PROJECT_DIR$/../spring-cloud-overview/users/pom.xml" />
-      </set>
-    </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_16" default="true" project-jdk-name="15" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />

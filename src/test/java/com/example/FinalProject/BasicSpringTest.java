@@ -1,7 +1,6 @@
 package com.example.FinalProject;
 
-import com.example.FinalProject.logic.ParcelManager;
-import com.example.FinalProject.logic.UserManager;
+import com.example.FinalProject.logic.ParcelServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,19 +55,19 @@ public abstract class BasicSpringTest {
 //            return new ObjectMapper();
 //        }
 
-        @Bean
-        public DBManager dbManager() {
-            return new DBManager();
-        }
+//        @Bean
+//        public DBManager dbManager() {
+//            return new DBManager();
+//        }
+
+//        @Bean
+//        public UserServiceImpl userManager() {
+//            return new UserServiceImpl();
+//        }
 
         @Bean
-        public UserManager userManager() {
-            return new UserManager();
-        }
-
-        @Bean
-        public ParcelManager parcelManager() {
-            return new ParcelManager();
+        public ParcelServiceImpl parcelManager() {
+            return new ParcelServiceImpl();
         }
     }
 }

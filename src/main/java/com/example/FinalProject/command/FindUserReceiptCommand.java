@@ -1,10 +1,14 @@
 package com.example.FinalProject.command;
 
 import com.example.FinalProject.DBException;
-import com.example.FinalProject.logic.ReceiptManager;
+import com.example.FinalProject.converter.UserConverter;
+import com.example.FinalProject.dto.ReceiptDto;
+import com.example.FinalProject.logic.ParcelService;
+import com.example.FinalProject.logic.ReceiptService;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -15,6 +19,17 @@ import java.util.List;
 @Controller
 public class FindUserReceiptCommand {
     private static final Logger log = LogManager.getLogger(FindUserReceiptCommand.class);
+    private ReceiptDto receiptDto;
+
+    @Autowired
+    private ReceiptService receiptService;
+    //Autowired
+    //private UserConverter userConverter;
+
+    public void setReceiptService(ReceiptService receiptService) {
+        this.receiptService = receiptService;
+    }
+
     @GetMapping(value = "/findReceipts")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Validator validator = new Validator();
@@ -34,6 +49,7 @@ public class FindUserReceiptCommand {
         int sortColumnNumber = 0;
         String toPoint = null;
         String status;
+        List receipts;
         Date createDate = null;
         Date paymentDate = null;
         Date deliveryDate = null;
@@ -53,8 +69,7 @@ public class FindUserReceiptCommand {
         if (paymentDate != null) {
             paymentDate = Date.valueOf(req.getParameter("paymentDate"));
         }
-        ReceiptManager receiptManager = ReceiptManager.getInstance();
-        List receipts = receiptManager.findReceiptByUser(id, userId, status, createDate, paymentDate, sortColumnNumber);
+        receipts = receiptService.getReceipts(id, userId, status, createDate, paymentDate, sortColumnNumber);
         int startReceipt = page * recPerPage - recPerPage;
         int endReceipt = page * recPerPage - 1;
         if (receipts != null) {

@@ -1,38 +1,66 @@
 package com.example.FinalProject.entity;
 
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-@Component
+@Entity
+@Table(name = "user")
+@DynamicInsert
+@DynamicUpdate
+@Data
+//NoArgsConstructor
+//AllArgsConstructor
+@NamedQueries({@NamedQuery(name = "userByLogin",
+        query = "from User u where u.login=:login")})
 public class User implements Serializable {
-    private int id;
-    private String name;
-    private String surname;
-    private String login;
-    private String password;
-    private String role;
-    //private RoleSec roleSec;
 
-    public static User createUser(String name, String surname, String login, String password, String role) {
-        User user = new User();
-        user.setName(name);
-        user.setSurname(surname);
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setRole(role);
-        return user;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "role")
+    private String role;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "login")
+    private String login;
+
+    @Column(name = "password")
+    private String password;
+
+    //OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "parcel",
+            joinColumns = @JoinColumn(name = "userId"))
+
+
+
+
+    private List<Parcel> parcels = new ArrayList<>();
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+//    public void setId(int id) {
+//        this.id = id;
+//    }
 
     public String getName() {
         return name;
@@ -77,7 +105,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" +
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
                 ", role='" + role + '\'' +

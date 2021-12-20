@@ -1,7 +1,6 @@
 package com.example.FinalProject.command;
 
 import com.example.FinalProject.DBException;
-import com.example.FinalProject.logic.ReceiptManager;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,8 +45,8 @@ public class ProvidePayReceiptCommand {
             receiptTotal = Double.parseDouble(req.getParameter("receiptTotal"));
         }
         if (userId != 0 && receiptId != 0 && receiptTotal != 0 && validator.validateCreditCard(cardNumber, expireDate)) {
-            ReceiptManager receiptManager = ReceiptManager.getInstance();
-            receiptManager.modifyReceipt(receiptId, receiptStatus);
+//            ReceiptManager receiptManager = ReceiptManager.getInstance();
+//            receiptManager.modifyReceipt(receiptId, receiptStatus);
             address = "my_receipt_start.jsp";
         }
         return address;

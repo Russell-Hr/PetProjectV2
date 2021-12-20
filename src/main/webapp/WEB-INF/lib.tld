@@ -16,7 +16,7 @@
         <name>user</name>
         <required>true</required>
         <rtexprvalue>true</rtexprvalue>
-        <type>com.example.FinalProject.entity.User</type>
+        <type>com.example.FinalProject.entity_old.User</type>
     </attribute>
   </tag>
 </taglib>

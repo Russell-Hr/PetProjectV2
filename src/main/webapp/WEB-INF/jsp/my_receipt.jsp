@@ -72,11 +72,6 @@
                             <br>
                             Статус: ${receipt.status}
                             <br>
-                            Платник: ${receipt.infoUser}
-                            <br>
-                            <br>
-                            ${receipt.infoRoute}
-                            <br>
                             <br>
                             ДО СПЛАТИ: ${receipt.total}грн.
                             <br>

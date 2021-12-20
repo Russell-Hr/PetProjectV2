@@ -1,172 +1,96 @@
 package com.example.FinalProject.entity;
 
-import com.example.FinalProject.Constants;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+
+import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-@Component
-@Scope("prototype")
-public class Parcel implements Serializable, Comparable<Parcel> {
+@Entity
+@Table(name = "parcel")
+@DynamicInsert
+@DynamicUpdate
+@Data
+@NamedQueries({
+        @NamedQuery(name = "parcelsByUserIdAll",
+                query = "from Parcel p where p.userId=:userId"),
+        @NamedQuery(name = "parcelsByStatusAll",
+                query = "from Parcel p where p.status=:status"),
+        @NamedQuery(name = "parcelsByUserIdByStatus",
+                query = "from Parcel p where p.userId=:userId and p.status=:status")
+})
+public class Parcel implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    //private UUID id = UUID.randomUUID();
     private int id;
+
+    @Column(name = "fromPoint")
     private String fromPoint;
+
+    @Column(name = "toPoint")
     private String toPoint;
+
+    //@Enumerated(EnumType.STRING)
+    @Column(name = "deliveryAddress")
     private String deliveryAddress;
+
+    //@Enumerated(EnumType.STRING)
+    @Column(name = "category")
     private String category;
+
+    @Column(name = "distance")
     private int distance;
+
+    @Column(name = "length")
     private int length;
+
+    @Column(name = "width")
     private int width;
+
+    @Column(name = "height")
     private int height;
+
+    @Column(name = "weight")
     private double weight;
+
+    @Column(name = "price")
     private double price;
 
+    @Column(name = "status")
     private String status;
+
+    @Column(name = "userId")
     private int userId;
+
+    @Column(name = "createDate")
     private Date createDate;
+
+    @Column(name = "paymentDate")
     private Date paymentDate;
+
+    @Column(name = "deliveryDate")
     private Date deliveryDate;
 
-    public Parcel() {
-    }
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
+    @JoinTable(name = "receipt_has_parcel",
+            joinColumns = @JoinColumn(name = "parcelId"),
+            inverseJoinColumns = @JoinColumn(name = "receiptId")
+    )
+    private List<Receipt> receipts = new ArrayList<>();
 
-    public Parcel(String fromPoint, String toPoint, int length, int width, int height, double weight) {
-        this.fromPoint = fromPoint;
-        this.toPoint = toPoint;
-        this.length = length;
-        this.width = width;
-        this.height = height;
-        this.weight = weight;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFromPoint() {
-        return fromPoint;
-    }
-
-    public void setFromPoint(String fromPoint) {
-        this.fromPoint = fromPoint;
-    }
-
-    public String getToPoint() {
-        return toPoint;
-    }
-
-    public void setToPoint(String toPoint) {
-        this.toPoint = toPoint;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public int getDistance() {
-        return distance;
-    }
-
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public Date getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
+    @ManyToOne
+    private User user;
 
     @Override
     public String toString() {
@@ -188,10 +112,5 @@ public class Parcel implements Serializable, Comparable<Parcel> {
                 ", paymentDate=" + paymentDate +
                 ", deliveryDate=" + deliveryDate +
                 '}';
-    }
-
-    @Override
-    public int compareTo(Parcel parcel) {
-        return 0;
     }
 }

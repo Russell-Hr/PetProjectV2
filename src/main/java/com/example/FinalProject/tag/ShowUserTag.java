@@ -2,9 +2,9 @@ package com.example.FinalProject.tag;
 
 import com.example.FinalProject.entity.User;
 
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import javax.servlet.jsp.JspException;
 
 public class ShowUserTag extends TagSupport {
 
@@ -20,11 +20,11 @@ public class ShowUserTag extends TagSupport {
 
         System.out.println("user ==> " + user);
         try {
-            pageContext.getOut()
-                    .append("<tr>")
-                    .append("<td>");
-            pageContext.getOut()
-                    .println(user.getId());
+//            pageContext.getOut()
+//                    .append("<tr>")
+//                    .append("<td>");
+//            pageContext.getOut()
+//                    .println(user.getId());
 
             pageContext.getOut()
                     .append("</td>")

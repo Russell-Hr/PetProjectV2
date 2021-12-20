@@ -35,7 +35,7 @@ public class LoginCommandIT {
 
     @Test
     public void homeShouldRedirectToUsersPage() throws Exception {
-    MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/lugin");
+    MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post("/lin");
     ResultActions result = mvc.perform(request);
         result.andExpect(MockMvcResultMatchers.view().name("my_parcel_start.jsp"));
     }

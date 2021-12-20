@@ -1,8 +1,7 @@
 package com.example.FinalProject.exception;
 
 import com.example.FinalProject.DBException;
-import com.example.FinalProject.logic.ParcelManager;
-import lombok.extern.slf4j.Slf4j;
+import com.example.FinalProject.logic.ParcelServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,7 +17,7 @@ import java.util.Arrays;
 @ControllerAdvice
 
 public class ExceptionResolver {
-    private static final Logger log = LogManager.getLogger(ParcelManager.class);
+    private static final Logger log = LogManager.getLogger(ParcelServiceImpl.class);
 
     @ExceptionHandler({SQLException.class})
     ModelAndView HandleSQLException(SQLException ex) {

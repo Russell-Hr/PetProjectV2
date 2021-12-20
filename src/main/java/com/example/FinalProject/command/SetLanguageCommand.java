@@ -1,8 +1,7 @@
 package com.example.FinalProject.command;
 
 import com.example.FinalProject.DBException;
-import com.example.FinalProject.entity.User;
-import com.example.FinalProject.logic.UserManager;
+import com.example.FinalProject.logic.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -21,9 +20,9 @@ public class SetLanguageCommand {
     @GetMapping(value = "/setLang")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         String lang = req.getParameter("lang");
-        UserManager userManager = UserManager.getInstance();
-        List<User> users= userManager.findAllUsers();
-        log.info(users);
+        //UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
+        //List<User> users= userServiceImpl.findAllUsers();
+        //log.info(users);
         String address = "main.jsp";
         req.getSession().setAttribute("lang", lang);
         return address;
