@@ -1,12 +1,18 @@
 package com.example.FinalProject.converter;
 
+import com.example.FinalProject.dao.ReceiptDao;
 import com.example.FinalProject.dto.ParcelDto;
 import com.example.FinalProject.entity.Parcel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ParcelConverter {
-    public Parcel asParcel(ParcelDto parcelDto) {
+public class ParcelConverterImpl implements ParcelConverter {
+
+    @Autowired
+    ReceiptDao receiptDao;
+
+    public Parcel convert(ParcelDto parcelDto) {
         Parcel parcel = new Parcel();
         parcel.setId(parcelDto.getId());
         parcel.setFromPoint(parcelDto.getFromPoint());
@@ -23,11 +29,13 @@ public class ParcelConverter {
         parcel.setCreateDate(parcelDto.getCreateDate());
         parcel.setPaymentDate(parcelDto.getPaymentDate());
         parcel.setDeliveryDate(parcelDto.getDeliveryDate());
-        parcel.setUserId(parcelDto.getUserId());
+        if (null != parcelDto.getReceiptDto()) {
+            parcel.setReceipt(receiptDao.getById(parcelDto.getReceiptDto().getId()));
+        }
         return parcel;
     }
 
-    public ParcelDto asParcelDto(Parcel parcel) {
+    public ParcelDto convert(Parcel parcel) {
         ParcelDto parcelDto = new ParcelDto();
         parcelDto.setId(parcel.getId());
         parcelDto.setFromPoint(parcel.getFromPoint());
@@ -44,7 +52,10 @@ public class ParcelConverter {
         parcelDto.setCreateDate(parcel.getCreateDate());
         parcelDto.setPaymentDate(parcel.getPaymentDate());
         parcelDto.setDeliveryDate(parcel.getDeliveryDate());
-        parcelDto.setUserId(parcel.getUserId());
+        parcelDto.setUserId(parcel.getUser().getId());
+        if (null != parcel.getReceipt()) {
+            parcelDto.setReceiptId(parcel.getReceipt().getId());
+        }
         return parcelDto;
     }
 }

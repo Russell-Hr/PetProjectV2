@@ -114,7 +114,7 @@
                     <td>${parcel.price}</td>
                     <td>${parcel.status}</td>
                     <td>${parcel.createDate}</td>
-                    <td>${parcel.createDate}</td>
+                    <td>${parcel.paymentDate}</td>
                     <td>
                         <form method="post" action="${pageContext.request.contextPath}/app/modifyParcel">
                             <!--<input type="hidden" name="command" value="modifyParcel"/>-->

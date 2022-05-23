@@ -1,9 +1,14 @@
 package com.example.FinalProject.logic;
 
-import com.example.FinalProject.converter.ParcelConverter;
+import com.example.FinalProject.converter.ParcelConverterImpl;
+import com.example.FinalProject.converter.UserConverter;
 import com.example.FinalProject.dao.ParcelDao;
+import com.example.FinalProject.dao.UserDao;
 import com.example.FinalProject.dto.ParcelDto;
+import com.example.FinalProject.dto.ReceiptDto;
+import com.example.FinalProject.dto.UserDto;
 import com.example.FinalProject.entity.Parcel;
+import com.example.FinalProject.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class ParcelServiceImpl implements ParcelService {
@@ -21,61 +27,91 @@ public class ParcelServiceImpl implements ParcelService {
 
     @Autowired
     private ParcelDao parcelDao;
-    Parcel parcel;
     @Autowired
-    private ParcelConverter parcelConverter;
+    private ParcelConverterImpl parcelConverterImpl;
+    @Autowired
+    private UserDao userDao;
+    @Autowired
+    private UserConverter userConverter;
+    @Autowired
+    private UserService userService;
+
+    User user;
+    Parcel parcel;
+    UserDto userDto;
+    ParcelDto parcelDto;
+    ReceiptDto receiptDto;
+    List<UserDto> userDtoList;
+    List<ParcelDto> parcelDtoList;
+    List<Parcel> parcels;
+    String parcelStatus;
+    Date deliveryDate;
 
     @Override
-@Transactional
+    @Transactional
     public void addParcel(ParcelDto parcelDto) {
-        boolean res = false;
-        Parcel parcel = parcelConverter.asParcel(parcelDto);
-        parcelDao.addParcel(parcel);
-        logger.info("CREATE PARCEL 2");
+        //userDto = userConverter.convert(userDao.getUser(parcelDto.getUserId()));
+        parcelDtoList = userDto.getParcels();
+        parcelDtoList.add(parcelDto);
+        //int id = userDto.getId();
+        userDto.setParcels(parcelDtoList);
+        userService.update(userDto);
     }
 
     @Override
-    public List<ParcelDto> getParcels(int userId, String toPoint, String status,
-                                      Date createDate, Date paymentDate, Date deliveryDate, int sortColumnNumber) {
-        List<ParcelDto> parcelDtoList = new ArrayList<>();
+    public List<ParcelDto> modifyParcels(List<ParcelDto> parcelsForReceiptDtoList, ReceiptDto receiptDto) {
+        switch (receiptDto.getStatus()) {
+            case "Approved":
+                parcelStatus = "Approved";
+                parcelsForReceiptDtoList.stream().forEach(p -> p.setReceiptDto(receiptDto));
+                break;
+            case "Payed":
+                parcelStatus = "Payed";
+                parcelsForReceiptDtoList.stream().forEach(p -> p.setReceiptDto(receiptDto));
+                parcelsForReceiptDtoList.stream().forEach(p -> p.setPaymentDate(new Date(System.currentTimeMillis())));
+                break;
+            case "Canceled":
+            case "Denied":
+                parcelStatus = "Ordered";
+                //parcelsForReceiptDtoList.stream().forEach(p -> p.setReceiptDto(null));
+                parcelsForReceiptDtoList.stream().forEach(p -> p.setReceiptId(null));
+                break;
+        }
+        parcelsForReceiptDtoList.stream().forEach(p -> p.setStatus(parcelStatus));
+        //parcelsForReceiptDtoList.stream().forEach(p -> p.setReceiptDto(receiptDto));
 
-        if (userId != 0) {
+        return parcelsForReceiptDtoList;
+    }
+
+    @Override
+    //@Transactional(readOnly = true)
+    public List<ParcelDto> getParcels(String userId, String toPoint, String status,
+                                      Date createDate, Date paymentDate, Date deliveryDate, int sortColumnNumber) {
+        List<ParcelDto> parcelDtoList;
+        if (userId != null) {
+            //user = userDao.getUser(userId);
+            userDto = userService.getUserById(userId);
             if (status == null || status.equals("All")) {
-                List<Parcel> parcels = parcelDao.getAllByUser(userId);
-                for (Parcel parcel :
-                        parcels) {
-                    parcelDtoList.add(parcelConverter.asParcelDto(parcel));
-                }
+                //               parcels = parcelDao.getAllByUser(userId);
+                parcelDtoList = userDto.getParcels();
             } else {
-                List<Parcel> parcels = parcelDao.getAllByUserByStatus(userId, status);
-                for (Parcel parcel :
-                        parcels) {
-                    parcelDtoList.add(parcelConverter.asParcelDto(parcel));
-                }
+//                parcels = parcelDao.getAllByUserByStatus(userId, status);
+                parcelDtoList = userDto.getParcels().stream().filter(u -> u.getStatus().equals(status)).collect(Collectors.toList());
             }
         } else {
-            if (status == null || status.equals("All")) {
-
-            List<Parcel> parcels = parcelDao.getAll();
-            for (Parcel parcel :
-                    parcels) {
-                parcelDtoList.add(parcelConverter.asParcelDto(parcel));
-            }
-            } else {
-                List<Parcel> parcels = parcelDao.getAllByStatus(status);
-                for (Parcel parcel :
-                        parcels) {
-                    parcelDtoList.add(parcelConverter.asParcelDto(parcel));
-                }
+            parcelDtoList = userService.getAllUsers().stream().filter(u -> !u.getRole().equals("manager"))
+                    .flatMap(u -> u.getParcels().stream()).collect(Collectors.toList());
+            if (status != null && !status.equals("All")) {
+                parcelDtoList = parcelDtoList.stream().filter(p -> p.getStatus().equals(status)).collect(Collectors.toList());
             }
         }
 
         switch (sortColumnNumber) {
             case 0:
-                parcelDtoList.sort(Comparator.comparingInt(ParcelDto::getId));
+                parcelDtoList.sort(Comparator.comparing(ParcelDto::getId));
                 break;
             case 1:
-                parcelDtoList.sort(Comparator.comparingInt(ParcelDto::getUserId));
+                // parcelDtoList.sort(Comparator.comparingInt(ParcelDto::getUserId));
                 break;
             case 2:
                 parcelDtoList.sort(Comparator.comparing(ParcelDto::getFromPoint));
@@ -99,16 +135,27 @@ public class ParcelServiceImpl implements ParcelService {
                 parcelDtoList.sort(Comparator.comparing(ParcelDto::getCreateDate));
                 break;
             default:
-                parcelDtoList.sort(Comparator.comparingInt(ParcelDto::getId));
+                parcelDtoList.sort(Comparator.comparing(ParcelDto::getId));
         }
         return parcelDtoList;
     }
 
-@Override
-@Transactional
-    public void modifyParcel(int id, String status) {
-
-    parcelDao.modifyParcelStatus(id, status);
+    @Override
+    //@Transactional
+    public void modifyParcel(String id, String status) {
+        if (status.equals("Delivered")) {
+            deliveryDate = new Date(System.currentTimeMillis());
+            parcelDao.modifyParcelDeliveryDate(id, deliveryDate);
+        }
+        parcelDao.modifyParcelStatus(id, status);
     }
+
+    @Override
+    //@Transactional
+    public void modifyParcelReceiptId(String id, String receiptId) {
+        //parcelDao.modifyParcelReceiptId(id, status);
+        parcelDao.modifyParcelReceiptId(id, receiptId);
+    }
+
 }
 

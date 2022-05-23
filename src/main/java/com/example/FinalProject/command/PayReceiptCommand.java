@@ -1,5 +1,6 @@
 package com.example.FinalProject.command;
 
+import com.example.FinalProject.Const;
 import com.example.FinalProject.DBException;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
@@ -15,29 +16,29 @@ public class PayReceiptCommand {
     private static final Logger log = LogManager.getLogger(PayReceiptCommand.class);
     @GetMapping(value = "/payReceipt")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException, SQLException {
-        int userId = 0;
-        int receiptId = 0;
+        String userId = null;
+        String receiptId = null;
         Double receiptTotal = 0.;
         Validator validator = new Validator();
         String address = null;
-        if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
+        if (validator.validateRoleAddress(req, resp, req.getParameter(Const.ADDRESS)).equals("index.jsp")) {
             return "index.jsp";
         } else {
-            address = validator.validateRoleAddress(req, resp, req.getParameter("address"));
+            address = validator.validateRoleAddress(req, resp, req.getParameter(Const.ADDRESS));
         }
-        if (req.getParameter("userId") != null) {
-            userId = Integer.parseInt(req.getParameter("userId"));
+        if (req.getParameter(Const.USER_ID) != null) {
+            userId = req.getParameter(Const.USER_ID);
         }
-        if (req.getParameter("receiptId") != null) {
-            receiptId = Integer.parseInt(req.getParameter("receiptId"));
+        if (req.getParameter(Const.RECEIPT_ID) != null) {
+            receiptId = req.getParameter(Const.RECEIPT_ID);
         }
-        if (req.getParameter("receiptTotal") != null) {
-            receiptTotal = Double.parseDouble(req.getParameter("receiptTotal"));
+        if (req.getParameter(Const.RECEIPT_TOTAL) != null) {
+            receiptTotal = Double.parseDouble(req.getParameter(Const.RECEIPT_TOTAL));
         }
-        if (userId != 0 && receiptId != 0 && receiptTotal != 0) {
-            req.setAttribute("userId", userId);
-            req.setAttribute("receiptId", receiptId);
-            req.setAttribute("receiptTotal", receiptTotal);
+        if (userId != null && receiptId != null && receiptTotal != 0) {
+            req.setAttribute(Const.USER_ID, userId);
+            req.setAttribute(Const.RECEIPT_ID, receiptId);
+            req.setAttribute(Const.RECEIPT_TOTAL, receiptTotal);
         }
         return address;
     }

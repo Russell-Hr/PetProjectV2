@@ -7,24 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="notification" />
         <module name="FinalProject" />
-        <module name="orders" />
-        <module name="eureka-server" />
-        <module name="gateway" />
-        <module name="users" />
-        <module name="products" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="eureka-server" target="11" />
+      <module name="eureka-server" target="8" />
       <module name="FinalProject" target="1.8" />
       <module name="gateway" target="11" />
       <module name="notification" target="11" />
       <module name="orders" target="11" />
-      <module name="products" target="11" />
+      <module name="products" target="8" />
       <module name="spring-cloud-overview" target="11" />
-      <module name="users" target="11" />
+      <module name="users" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

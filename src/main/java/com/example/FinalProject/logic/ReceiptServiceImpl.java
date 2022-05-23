@@ -1,11 +1,12 @@
 package com.example.FinalProject.logic;
 
+import com.example.FinalProject.Const;
 import com.example.FinalProject.converter.ParcelConverter;
 import com.example.FinalProject.converter.ReceiptConverter;
 import com.example.FinalProject.dao.ReceiptDao;
 import com.example.FinalProject.dto.ParcelDto;
 import com.example.FinalProject.dto.ReceiptDto;
-import com.example.FinalProject.entity.Parcel;
+import com.example.FinalProject.dto.UserDto;
 import com.example.FinalProject.entity.Receipt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -25,123 +27,106 @@ public class ReceiptServiceImpl implements ReceiptService {
     @Autowired
     private ReceiptDao receiptDao;
     @Autowired
+    private UserService userService;
+    @Autowired
     private ParcelService parcelService;
     @Autowired
-    private ReceiptConverter receiptConverter;
-    @Autowired
     private ParcelConverter parcelConverter;
+    @Autowired
+    private ReceiptConverter receiptConverter;
 
+
+    UserDto userDto;
+    ReceiptDto receiptDto;
+    List<ParcelDto> parcelDtoList;
+    //List<ReceiptDto> receiptDtoList;
+
+    @Override
     @Transactional
-    public boolean addReceipt(ReceiptDto receiptDto, List<ParcelDto> parcelsDto) {
-        boolean res = false;
+    public void addReceipt(ReceiptDto receiptDto, List<ParcelDto> parcelsForReceiptDtoList) {
         Double total = 0.;
-        String status = "Approved";
-        System.out.println("Receipt Manager ==> Add receipt");
+        String status = Const.APPROVED;
+//      String receiptInfo = "";
+//
+//        for (int i = 0; i < parcelsForReceiptDtoList.size(); i++) {
+//            receiptInfo = receiptInfo + ("Відправлення № " + parcelsForReceiptDtoList.get(i).getId() + "<br>" +
+//                    parcelsForReceiptDtoList.get(i).getFromPoint() + " - " + parcelsForReceiptDtoList.get(i).getToPoint() + "<br>" +
+//                    parcelsForReceiptDtoList.get(i).getDeliveryAddress() + "<br>" +
+//                    "Ціна: " + parcelsForReceiptDtoList.get(i).getPrice() + " грн." + "<br>");
+//        }
 
-        for (ParcelDto parcelDto : parcelsDto) {
-            Parcel parcel = parcelConverter.asParcel(parcelDto);
-            System.out.println("Receipt Manager2 ==> Add receipt" + parcelDto.getId() + status);
-            parcelService.modifyParcel(parcelDto.getId(), status);
-            System.out.println("Receipt Manager3 ==> Add receipt");
-            total = total + parcelDto.getPrice();
-        }
+        StringBuffer sb = new StringBuffer();
+        parcelsForReceiptDtoList.stream().forEach(p -> sb.append(Const.RECEIPT_TOPIC).append(p.getId()).append(Const.BR)
+                .append(p.getFromPoint()).append(Const.DASH).append(p.getToPoint()).append(Const.BR)
+                .append(p.getDeliveryAddress()).append(Const.BR).append(Const.PRICE)
+                .append(p.getPrice()).append(Const.GRN).append(Const.BR));
+        String receiptInfo = sb.toString();
+        receiptDto.setReceiptInfo(receiptInfo);
+        total = parcelsForReceiptDtoList.stream().mapToDouble(p -> p.getPrice()).sum();
         receiptDto.setTotal(total);
-        Receipt receipt = receiptConverter.asReceipt(receiptDto);
-            long id = receiptDao.addReceipt(receipt);
-//            for (Parcel parcel : parcels) {
-//                dbManager.addParcelForReceipt(con, (int) id, parcel.getId(), parcel.getPrice());
-//            }
 
-
-        return res;
+        receiptDto.setStatus(status);
+        userDto = userService.getUserById(receiptDto.getUserId());
+        receiptDto.setParcels(parcelsForReceiptDtoList);
+        receiptDto = receiptConverter.convert(receiptDao.addReceipt(receiptConverter.convert(receiptDto)));
+        List<ParcelDto> updatedParcelsForReceiptDtoList = parcelService.modifyParcels(parcelsForReceiptDtoList, receiptDto);
+        parcelDtoList = userDto.getParcels().stream().filter(p1 -> !(updatedParcelsForReceiptDtoList.stream()
+                .anyMatch(p2 -> Objects.equals(p1.getId(), p2.getId())))).collect(Collectors.toList());
+        parcelDtoList.addAll(updatedParcelsForReceiptDtoList);
+        userDto.setParcels(parcelDtoList);
+        userService.update(userDto);
     }
 
-    public List<ReceiptDto> getReceipts(int id, int userId, String status, Date createDate, Date paymentDate, int sortColumnNumber) {
-        List<ReceiptDto> receiptsDtoList = new ArrayList<>();
-
-        if (userId != 0) {
-            if (status.equals("All") || status == null) {
-                List<Receipt> receipts = receiptDao.getAllByUser(userId);
-                for (Receipt receipt :
-                        receipts) {
-                    receiptsDtoList.add(receiptConverter.asReceiptDto(receipt));
-                }
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReceiptDto> getReceipts(String id, String userId, String status, Date createDate, Date paymentDate, int sortColumnNumber) {
+        List<ReceiptDto> receiptDtoList;
+        if (userId != null) {
+            userDto = userService.getUserById(userId);
+            if (status == null || status.equals("All")) {
+                receiptDtoList = receiptDao.getAllByUser(userId).stream().map(r -> receiptConverter.convert(r)).collect(Collectors.toList());
             } else {
-                List<Receipt> receipts = receiptDao.getAllByUserByStatus(userId, status);
-                for (Receipt receipt :
-                        receipts) {
-                    receiptsDtoList.add(receiptConverter.asReceiptDto(receipt));
-                }
+                receiptDtoList = receiptDao.getAllByUserByStatus(userId, status).stream().map(r -> receiptConverter.convert(r)).collect(Collectors.toList());
             }
         } else {
-            List<Receipt> receipts = receiptDao.getAll();
-            for (Receipt receipt :
-                    receipts) {
-                receiptsDtoList.add(receiptConverter.asReceiptDto(receipt));
+            receiptDtoList = receiptDao.getAll().stream().map(r -> receiptConverter.convert(r)).collect(Collectors.toList());
+            if (status != null && !status.equals("All")) {
+                receiptDtoList = receiptDtoList.stream().filter(r -> r.getStatus().equals(status)).collect(Collectors.toList());
             }
         }
-
-        //List<Receipt> receipts = receiptDao.getAllByUser(userId);
-//        for (int i = 0; i < receipts.size(); i++) {
-//            receipts.get(i).setInfoRoute("Відправлення № " + receipts.get(i).getParcelId() + "<br>" + receipts.get(i).getInfoRoute()
-//                    + "<br>" + "Ціна: " + receipts.get(i).getPrice() + " грн.");
-//            //logger.info(receipts.get(i));
-//        }
-//        int listSize = receipts.size();
-//        for (int i = 0; i < listSize; i++) {
-//            while (((i + 1) < listSize) && (receipts.get(i).getId() == receipts.get(i + 1).getId())) {
-//                receipts.get(i).setInfoRoute(receipts.get(i).getInfoRoute() + "<br><br>" + receipts.get(i + 1).getInfoRoute());
-//                receipts.remove(i + 1);
-//                listSize = listSize - 1;
-//            }
-//        }
-
-
-//        for (Receipt receipt :
-//                receipts) {
-//            receiptsDtoList.add(receiptConverter.asReceiptDto(receipt));
-//        }
-
-
-        return receiptsDtoList;
+        return receiptDtoList;
     }
 
-    public boolean modifyReceipt(int id, String status) {
-        List<Receipt> receipts = null;
-        boolean res = false;
-        Double total = 0.;
-        int userId = 0;
-        Date createDate = null;
-        Date paymentDate = null;
-        String statusToFind = null;
-        String parcelStatus = null;
-        switch (status) {
-            case "Payed":
-                parcelStatus = "Payed";
-                break;
-            case "Canceled":
-            case "Denied":
-                parcelStatus = "Ordered";
-                break;
-        }
-//        Connection con = null;
-//        try {
-//            con = dbManager.getConnection();
-//            con.setAutoCommit(false);
-//            con.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-//            receipts = dbManager.findReceiptsByUser(con, id, userId, statusToFind, createDate, paymentDate);
-//            dbManager.modifyReceipt(con, id, status);
-//            for (Receipt receipt : receipts) {
-//                dbManager.modifyParcel(con, receipt.getParcelId(), parcelStatus);
-//            }
-//            con.commit();
-//        } catch (SQLException | DBException ex) {
-//            log.error("cannot do modifyReceipt", ex);
-//            con.rollback();
-//            new DBException("Cannot modify a receipt with id:" + receipts.get(0).getId(), ex);
-//        } finally {
-//            dbManager.close(con);
-//        }
+    @Override
+    @Transactional
+    public boolean modifyReceipt(String id, String status) {
+        boolean res = true;
+        Receipt receipt = receiptDao.getById(id);
+        List<ParcelDto> parcelsForReceiptDtoList = receipt.getParcels().stream().map(p -> parcelConverter.convert(p)).collect(Collectors.toList());
+        receiptDto = receiptConverter.convert(receipt);
+        //receiptDto.setStatus(status);
+        //userDto = userService.getUserById(receiptDto.getUserId());
+        //parcelDtoList = receiptDto.getParcels();
+        //receiptDto.setStatus(status);
+        //parcelDtoList = parcelService.modifyParcels(parcelDtoList, receiptDto);
+        //userDto.setParcels(parcelDtoList);
+        //userService.update(userDto);
+        //==
+        receiptDto.setStatus(status);
+        userDto = userService.getUserById(receiptDto.getUserId());
+        //receiptDto.setParcels(parcelsForReceiptDtoList);
+
+        //receiptDto = receiptConverter.convert(receipt);//?
+        List<ParcelDto> updatedParcelsForReceiptDtoList = parcelService.modifyParcels(parcelsForReceiptDtoList, receiptDto);
+        receiptDto.setParcels(updatedParcelsForReceiptDtoList);
+        receipt=receiptConverter.convert(receiptDto);
+        receipt.setStatus("Payed");
+        parcelDtoList = userDto.getParcels().stream().filter(p1 -> !(updatedParcelsForReceiptDtoList.stream()
+                .anyMatch(p2 -> Objects.equals(p1.getId(), p2.getId())))).collect(Collectors.toList());
+        parcelDtoList.addAll(updatedParcelsForReceiptDtoList);
+        userDto.setParcels(parcelDtoList);
+        userService.update(userDto);
+        //==
         return res;
     }
 }

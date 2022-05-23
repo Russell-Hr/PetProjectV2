@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 
 @Slf4j
@@ -28,7 +29,8 @@ public class ParcelDaoImpl implements ParcelDao {
     public void addParcel(Parcel parcel) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(parcel);
-        LOGGER.info("Parcel has been successfully saved. Flight details: {}", parcel);
+        session.save(parcel);
+        LOGGER.info("Parcel has been successfully saved. Parcel details: {}", parcel);
     }
 
     @Override
@@ -36,9 +38,6 @@ public class ParcelDaoImpl implements ParcelDao {
     public Parcel getParcelById(int id) {
         Session session = sessionFactory.getCurrentSession();
         //Parcel parcel =(Parcel)session.get(Parcel.class, id);
-
-
-
         //Query query = session.createQuery("select from Parcel p where p.id=id");
         //Parcel parcel = parcels.get(1);
         //Parcel p = query.setString("status", p.getStatus()).uniqueResult();
@@ -46,29 +45,35 @@ public class ParcelDaoImpl implements ParcelDao {
         // Profile p = query.setString("username", user.getUsername()).uniqueResult();
         //p.setStatus("john");
 
-//        try{
-//            tx = session.beginTransaction();
-//            Employee employee =
-//                    (Employee)session.get(Employee.class, EmployeeID);
-//            employee.setSalary( salary );
-//            session.update(employee);
-//            tx.commit();
-//        }catch (HibernateException e) {
-//            if (tx!=null) tx.rollback();
-//            e.printStackTrace();
-//        }finally {
-//            session.close();
-//        }
-
-        return null ;
+        return null;
     }
 
     @Override
     @Transactional
-    public void modifyParcelStatus(int id, String status) {
+    public void modifyParcelStatus(String id, String status) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("update Parcel set status = :status" + " where id = : id" );
+        Query query = session.createQuery("update Parcel set status = :status" + " where id = : id");
         query.setParameter("status", status);
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void modifyParcelDeliveryDate(String id, Date deliveryDate) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("update Parcel set deliveryDate = :deliveryDate" + " where id = : id");
+        query.setParameter("deliveryDate", deliveryDate);
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public void modifyParcelReceiptId(String id, String receiptId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("update Parcel set receiptId = :receiptId" + " where id = : id");
+        query.setParameter("receiptId", receiptId);
         query.setParameter("id", id);
         query.executeUpdate();
     }
@@ -78,19 +83,17 @@ public class ParcelDaoImpl implements ParcelDao {
     @Transactional(readOnly = true)
     public List<Parcel> getAll() {
         List<Parcel> parcels = sessionFactory.getCurrentSession().createQuery("from Parcel").list();
-
         for (Parcel parcel :
                 parcels) {
-            LOGGER.info("Flight list: {}", parcel);
+            LOGGER.info("Parcel list: {}", parcel);
         }
-
         return parcels;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
-    public List<Parcel> getAllByUser(Integer userId) {
+    public List<Parcel> getAllByUser(String userId) {
         List<Parcel> parcels = sessionFactory.getCurrentSession().getNamedQuery("parcelsByUserIdAll")
                 .setParameter("userId", userId).list();
         for (Parcel parcel :
@@ -134,14 +137,40 @@ public class ParcelDaoImpl implements ParcelDao {
                 .setParameter("userId", userId)
                 .setParameter("status", status)
                 .list();
-//        for (Parcel parcel :
-//                parcels) {
-//            LOGGER.info("Parcel list User All Status: {}", parcel);
-//
-//            if ( !(parcel.getStatus().equals(status))){
-//            parcels.remove(parcel);
-//            }
-//        }
         return parcels;
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    public List<Parcel> getAllByUserByReceiptId(Integer userId, Integer receiptId) {
+        List<Parcel> parcels = sessionFactory.getCurrentSession().getNamedQuery("parcelsByUserIdByReceiptId")
+                .setParameter("userId", userId)
+                .setParameter("receiptId", receiptId)
+                .list();
+        return parcels;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    public List<Parcel> getAllByUserWithReceipt(Integer userId) {
+        List<Parcel> parcels = sessionFactory.getCurrentSession().getNamedQuery("parcelsByUserIdWithReceipt")
+                .setParameter("userId", userId)
+                .list();
+        return parcels;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    @Transactional(readOnly = true)
+    public List<Parcel> getAllWithReceipt() {
+        List<Parcel> parcels = sessionFactory.getCurrentSession().createQuery("from Parcel p where p.receiptId!=0").list();
+        for (Parcel parcel :
+                parcels) {
+            LOGGER.info("Parcel list: {}", parcel);
+        }
+        return parcels;
+    }
+
 }

@@ -1,6 +1,6 @@
 package com.example.FinalProject.security;
 
-import com.example.FinalProject.converter.UserConverter;
+import com.example.FinalProject.converter.UserConverterImpl;
 import com.example.FinalProject.dto.UserDto;
 import com.example.FinalProject.entity.User;
 import com.example.FinalProject.logic.UserService;
@@ -22,14 +22,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userService = userService;
     }
     @Autowired
-    private UserConverter userConverter;
+    private UserConverterImpl userConverterImpl;
 
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         UserDto userDto = userService.getUser(login);
         assert userDto != null;
-        User user = userConverter.asUser(userDto);
+        User user = userConverterImpl.convert(userDto);
         log.info("UserDetailsServiceImpl", user.toString());
         return SecurityUser.fromUser(user);
     }

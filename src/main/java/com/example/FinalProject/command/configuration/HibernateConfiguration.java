@@ -2,12 +2,8 @@ package com.example.FinalProject.command.configuration;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Environment;
-import org.mariadb.jdbc.MariaDbDataSource;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -30,7 +26,7 @@ public class HibernateConfiguration {
         dataSource.setPassword("root");
         return dataSource;
     }
-
+//?UseUnicode=true&characterEncoding=utf8
     @Bean
     public LocalSessionFactoryBean sessionFactory() throws SQLException {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -54,7 +50,10 @@ public class HibernateConfiguration {
         hibernateProperties.setProperty("hibernate.show_sql", "true");
         hibernateProperties.setProperty("hibernate.format_sql", "true");
         //hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDB103Dialect");
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        hibernateProperties.setProperty("hibernate.connection.charSet", "UTF-8");
+        hibernateProperties.setProperty("hibernate.connection.characterEncoding", "UTF-8");
+        hibernateProperties.setProperty("hibernate.connection.useUnicode", "true");
         return hibernateProperties;
     }
 }

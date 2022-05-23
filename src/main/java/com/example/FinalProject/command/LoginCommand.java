@@ -37,8 +37,10 @@ public class LoginCommand {
         Principal principal = req.getUserPrincipal();
         String login = principal.getName();
         UserDto userDto = userService.getUser(login);
-        User user = userConverter.asUser(userDto);
-        if (user != null && user.getPassword().equals(user.getPassword())) {
+
+        User user = userConverter.convert(userDto);
+
+        if (user != null) {
             if (user.getRole().equals("user")) {
                 address = "my_parcel_start.jsp";
                 req.getSession().setAttribute("role", user.getRole());

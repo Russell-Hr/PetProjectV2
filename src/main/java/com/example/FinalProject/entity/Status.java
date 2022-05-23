@@ -1,6 +1,6 @@
 package com.example.FinalProject.entity;
 
-public enum ParcelStatus {
+public enum Status {
     ORDERED("Ordered"), // when parcel is created
     APPROVED("Approved"), // when parcel is approved
     CANCELED("Canceled"), // when parcel is canceled
@@ -14,7 +14,7 @@ public enum ParcelStatus {
         this.displayValue = displayValue;
     }
 
-    ParcelStatus(String ordered) {
+    Status(String ordered) {
     }
 
     public String getDisplayValue() {

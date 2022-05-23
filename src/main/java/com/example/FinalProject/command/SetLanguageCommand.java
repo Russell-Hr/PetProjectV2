@@ -20,9 +20,6 @@ public class SetLanguageCommand {
     @GetMapping(value = "/setLang")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         String lang = req.getParameter("lang");
-        //UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
-        //List<User> users= userServiceImpl.findAllUsers();
-        //log.info(users);
         String address = "main.jsp";
         req.getSession().setAttribute("lang", lang);
         return address;

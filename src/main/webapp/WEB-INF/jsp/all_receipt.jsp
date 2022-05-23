@@ -80,8 +80,8 @@
                 <tr>
                     <td>${receipt.id}</td>
                     <td>${receipt.userId}</td>
-                    <td>${receipt.infoUser}</td>
-                    <td>${receipt.infoRoute}</td>
+                    <td>${receipt.userInfo}</td>
+                    <td>${receipt.receiptInfo}</td>
                     <td>${receipt.total}</td>
                     <td>${receipt.status}</td>
                     <td>${receipt.managerId}</td>

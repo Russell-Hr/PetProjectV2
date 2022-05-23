@@ -1,35 +1,42 @@
 package com.example.FinalProject.logic;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ValidatorTest {
-    Validator validator;
 
-    @BeforeEach
-    void setUp() {
-        validator = mock(Validator.class);
-    }
+    Validator validator = new Validator();
 
-    @AfterEach
-    void tearDown() {
-        validator = null;
+    @Before
+    public void setUp() {
+        final Date date = Mockito.mock(Date.class);
+        final SimpleDateFormat sdf = Mockito.mock(SimpleDateFormat.class);
+        Mockito.when(new SimpleDateFormat("MMyy").format(date)).thenReturn("1125");
     }
 
     @Test
-    void validateCreditCard_Return_False() {
-        assertFalse(validator.validateCreditCard("1111111111111111", "11/21"));
+    void validateCreditCard_WrongDate_Return_False() {
+        assertFalse(validator.validateCreditCard("9804400030608294", "10/25"));
     }
 
     @Test
     void validateCreditCard_Return_True() {
-        assertTrue(validator.validateCreditCard("4188373028005806", "12/21"));
+        assertTrue(validator.validateCreditCard("9804400030608294", "12/25"));
     }
+
+    @Test
+    void validateCreditCard_WrongNumber_Return_False() {
+        assertFalse(validator.validateCreditCard("1111111111111111", "12/25"));
+    }
+
+
 
 
 }

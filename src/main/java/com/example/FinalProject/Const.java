@@ -1,6 +1,6 @@
 package com.example.FinalProject;
 
-public enum Constants {
+public enum Const {
     ;
     public static final String[] CITIES = new String[]{"", "Вінниця", "Дніпро", "Донецьк", "Житомир", "Запоріжжя", "Івано-Франківськ",
             "Київ", "Кропивницький", "Луганськ", "Луцьк", "Львів", "Миколаїв", "Одеса", "Полтава", "Рівне",
@@ -32,6 +32,20 @@ public enum Constants {
             {0, 343, 324, 547, 321, 405, 709, 190, 126, 706, 578, 740, 300, 420, 279, 508, 696, 540, 575, 984, 420, 351, 463, 0, 660, 330},
             {0, 312, 891, 1141, 389, 957, 143, 538, 637, 1292, 336, 278, 642, 515, 892, 331, 981, 883, 176, 444, 1036, 713, 190, 660, 0, 695},
             {0, 396, 672, 867, 271, 747, 701, 149, 363, 951, 949, 690, 640, 529, 477, 458, 1112, 350, 568, 951, 608, 691, 455, 330, 695, 0}};
+
+    public static final String RECEIPT_TOPIC = "Відправлення № ";
+    public static final String BR = "<br>";
+    public static final String PRICE = "Ціна: ";
+    public static final String DASH = " - ";
+    public static final String GRN = " грн.";
+
+    public static final String ORDERED = "Ordered"; // when parcel is created
+    public static final String APPROVED = "Approved"; // when parcel is approved
+    public static final String CANCELED = "Canceled"; // when parcel is canceled
+    public static final String DENIED = "Denied"; // when parcel is denied
+    public static final String PAYED = "Payed"; // when parcel is payed
+    public static final String DELIVERED = "Delivered"; // when parcel is delivered
+
     static final String FIND_USER_BY_LOGIN =
             "select * from user where login=?";
     static final String FIND_ALL_USERS =
@@ -44,45 +58,62 @@ public enum Constants {
     static final String DELETE_PARCEL = "DELETE FROM parcel WHERE id=?";
     static final String ADD_NEW_PARCEL = "INSERT INTO parcel (fromPoint, toPoint, deliveryAddress," +
             " category, distance, length, width, height, weight, price, status, userId, createDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    static final String ID = "id";
-    static final String FROM_POINT = "fromPoint";
-    static final String TO_POINT = "toPoint";
-    static final String DELIVERY_ADDRESS = "deliveryAddress";
-    static final String CATEGORY = "category";
-    static final String DISTANCE = "distance";
-    static final String LENGTH = "length";
-    static final String WIDTH = "width";
-    static final String HEIGHT = "height";
-    static final String WEIGHT = "weight";
-    static final String PARCEL_PRICE = "price";
-    static final String STATUS = "status";
-    static final String USER_ID = "userId";
-    static final String CREATE_DATE = "createDate";
-    static final String PAYMENT_DATE = "paymentDate";
-    static final String DELIVERY_DATE = "deliveryDate";
-    static final String STATUS_NEW_PARCEL = "Ordered";
-    static final String STATUS_NEW_RECEIPT = "Approved";
-    static final String RECEIPT_ID = "receipt.id";
-    static final String RECEIPT_PARCEL_ID = "parcel.id";
-    static final String RECEIPT_USER_ID = "receipt.userId";
-    static final String RECEIPT_MANAGER_ID = "receipt.managerId";
-    static final String RECEIPT_USER_NAME = "user.name";
-    static final String RECEIPT_USER_SURNAME = "user.surname";
-    static final String RECEIPT_FROM_POINT = "parcel.fromPoint";
-    static final String RECEIPT_TO_POINT = "parcel.toPoint";
-    static final String RECEIPT_PARCEL_PRICE = "parcel.price";
-    static final String RECEIPT_TOTAL = "receipt.total";
-    static final String RECEIPT_STATUS = "receipt.status";
-    static final String RECEIPT_CREATE_DATE = "receipt.createDate";
-    static final String RECEIPT_PAYMENT_DATE = "receipt.paymentDate";
-    static final String FIND_PARCELS_BY_USER_ID = "SELECT * FROM parcel WHERE userId LIKE ? ESCAPE '!'";
-    static final String FIND_PARCELS_START = "SELECT * FROM parcel";
-    static final String MODIFY_STATUS_PARCEL = "UPDATE parcel SET status=? WHERE id=?";
-    static final String MODIFY_STATUS_PAYMENT_DATE_PARCEL = "UPDATE parcel SET status=?, paymentDate=? WHERE id=?";
-    static final String MODIFY_STATUS_DELIVERY_DATE_PARCEL = "UPDATE parcel SET status=?, deliveryDate=? WHERE id=?";
-    static final String MODIFY_STATUS_RECEIPT = "UPDATE receipt SET status=? WHERE id=?";
-    static final String MODIFY_STATUS_PAYMENT_DATE_RECEIPT = "UPDATE receipt SET status=?, paymentDate=? WHERE id=?";
-    static final String FIND_RECEIPTS_START = "SELECT receipt.id, parcel.id, receipt.userId, receipt.managerId, user.name, user.surname, parcel.fromPoint, parcel.toPoint, parcel.price, receipt.createDate, receipt.paymentDate, receipt.status, receipt.total\n" +
+
+    public static final String ID = "id";
+    public static final String FROM_POINT = "fromPoint";
+    public static final String TO_POINT = "toPoint";
+    public static final String ADDRESS = "address";
+    public static final String CATEGORY = "category";
+    public static final String DISTANCE = "distance";
+    public static final String LENGTH = "length";
+    public static final String WIDTH = "width";
+    public static final String HEIGHT = "height";
+    public static final String WEIGHT = "weight";
+    public static final String PARCEL_PRICE = "price";
+    public static final String STATUS = "status";
+    public static final String USER_ID = "userId";
+    public static final String MANAGER_ID = "managerId";
+    public static final String CREATE_DATE = "createDate";
+    public static final String PAYMENT_DATE = "paymentDate";
+    public static final String DELIVERY_DATE = "deliveryDate";
+    public static final String NAME_RECEIVER = "nameR";
+    public static final String SURNAME_RECEIVER = "surnameR";
+    public static final String CALCULATED_PARCEL = "calculatedParcel";
+    public static final String PAGE = "page";
+    public static final String SORT_COLUMN_NUMBER = "sortColumnNumber";
+    public static final String PARCEL_ID = "parcel_id";
+    public static final String VUL = "вул. ";
+    public static final String STREET = "street";
+    public static final String HOUSE = "house";
+    public static final String FLAT = "flat";
+    public static final String TO_CITY = "toCity";
+    public static final String RECEIPT_ID = "receiptId";
+    public static final String RECEIPT_STATUS = "receiptStatus";
+    public static final String RECEIPT_TOTAL = "receiptTotal";
+    public static final String CARD_NUMBER = "cardNumber";
+    public static final String EXPIRE_DATA = "expireDate";
+
+
+    public static final String LOGIN = "login";
+    public static final String PASSWORD = "password";
+    public static final String PASSWORD_2 = "password2";
+    public static final String NAME = "name";
+    public static final String SURNAME = "surname";
+    public static final String RECEIPT_FROM_POINT = "parcel.fromPoint";
+    public static final String RECEIPT_TO_POINT = "parcel.toPoint";
+    public static final String RECEIPT_PARCEL_PRICE = "parcel.price";
+
+
+    public static final String RECEIPT_CREATE_DATE = "receipt.createDate";
+    public static final String RECEIPT_PAYMENT_DATE = "receipt.paymentDate";
+    public static final String FIND_PARCELS_BY_USER_ID = "SELECT * FROM parcel WHERE userId LIKE ? ESCAPE '!'";
+    public static final String FIND_PARCELS_START = "SELECT * FROM parcel";
+    public static final String MODIFY_STATUS_PARCEL = "UPDATE parcel SET status=? WHERE id=?";
+    public static final String MODIFY_STATUS_PAYMENT_DATE_PARCEL = "UPDATE parcel SET status=?, paymentDate=? WHERE id=?";
+    public static final String MODIFY_STATUS_DELIVERY_DATE_PARCEL = "UPDATE parcel SET status=?, deliveryDate=? WHERE id=?";
+    public static final String MODIFY_STATUS_RECEIPT = "UPDATE receipt SET status=? WHERE id=?";
+    public static final String MODIFY_STATUS_PAYMENT_DATE_RECEIPT = "UPDATE receipt SET status=?, paymentDate=? WHERE id=?";
+    public static final String FIND_RECEIPTS_START = "SELECT receipt.id, parcel.id, receipt.userId, receipt.managerId, user.name, user.surname, parcel.fromPoint, parcel.toPoint, parcel.price, receipt.createDate, receipt.paymentDate, receipt.status, receipt.total\n" +
             "FROM parcel, receipt_has_parcel, receipt, user\n" +
             "WHERE receipt_has_parcel.parcelId = parcel.id AND receipt_has_parcel.receiptId=receipt.id AND receipt.userId=user.id";
     //SELECT * FROM parcel WHERE userId LIKE ? ESCAPE '!'

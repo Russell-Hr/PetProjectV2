@@ -110,7 +110,7 @@
                             </c:if>
                             <c:if test="${parcel.status == 'Approved'}">
                                 <div>
-                                    <form action="${pageContext.request.contextPath}/app/findReceipts" method="post"/>
+                                    <form action="${pageContext.request.contextPath}/app/findReceipts" method="get"/>
                                         <!--<input type="hidden" name="command" value="findReceipts"/>-->
                                         <input type="hidden" name="userId" value="${loggedUser.id}"/>
                                         <input type="hidden" name="role" value="${loggedUser.role}"/>

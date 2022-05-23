@@ -1,6 +1,6 @@
 package com.example.FinalProject.service;
 
-import com.example.FinalProject.Constants;
+import com.example.FinalProject.Const;
 import com.example.FinalProject.annotation.Bench;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +25,15 @@ public class CalculateParcelParamService {
         int calculatedDistance = 0;
         int indexFromPoint = 0;
         int indexToPoint = 0;
-        for (int i = 0; i < Constants.CITIES.length; i++) {
-            if (fromPoint.equals(Constants.CITIES[i])) {
+        for (int i = 0; i < Const.CITIES.length; i++) {
+            if (fromPoint.equals(Const.CITIES[i])) {
                 indexFromPoint = i;
             }
-            if (toPoint.equals(Constants.CITIES[i])) {
+            if (toPoint.equals(Const.CITIES[i])) {
                 indexToPoint = i;
             }
         }
-        calculatedDistance = Constants.DISTANCES[indexFromPoint][indexToPoint];
+        calculatedDistance = Const.DISTANCES[indexFromPoint][indexToPoint];
         return calculatedDistance;
     }
 }

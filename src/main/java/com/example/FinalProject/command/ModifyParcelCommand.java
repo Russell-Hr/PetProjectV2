@@ -1,7 +1,8 @@
 package com.example.FinalProject.command;
 
+import com.example.FinalProject.Const;
 import com.example.FinalProject.DBException;
-import com.example.FinalProject.converter.UserConverter;
+import com.example.FinalProject.converter.UserConverterImpl;
 import com.example.FinalProject.dto.ParcelDto;
 import com.example.FinalProject.logic.ParcelService;
 import com.example.FinalProject.logic.Validator;
@@ -20,7 +21,7 @@ public class ModifyParcelCommand {
     @Autowired
     private ParcelService parcelService;
     @Autowired
-    private UserConverter userConverter;
+    private UserConverterImpl userConverterImpl;
 
     public void setParcelService(ParcelService parcelService) {
         this.parcelService = parcelService;
@@ -31,22 +32,21 @@ public class ModifyParcelCommand {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Validator validator = new Validator();
         String address;
-        if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
+        if (validator.validateRoleAddress(req, resp, req.getParameter(Const.ADDRESS)).equals("index.jsp")) {
             return "index.jsp";
         } else {
-            address = validator.validateRoleAddress(req, resp, req.getParameter("address"));
+            address = validator.validateRoleAddress(req, resp, req.getParameter(Const.ADDRESS));
         }
         String toCity = null;
-        String status = req.getParameter("status");
-        int id = Integer.parseInt(req.getParameter("parcel_id"));
-        if (req.getParameter("toCity") != null) {
-            toCity = req.getParameter("toCity");
+        String status = req.getParameter(Const.STATUS);
+        String id = req.getParameter(Const.PARCEL_ID);
+        if (req.getParameter(Const.TO_CITY) != null) {
+            toCity = req.getParameter(Const.TO_CITY);
         }
-        if (id != 0 && status != null) {
-            //ParcelManager parcelManager = ParcelManager.getInstance();
+        if (id != null && status != null) {
             parcelService.modifyParcel(id, status);
         }
-        req.setAttribute("toCity", toCity);
+        req.setAttribute(Const.TO_CITY, toCity);
         return address;
     }
 }

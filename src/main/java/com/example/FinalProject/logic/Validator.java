@@ -43,6 +43,7 @@ public class Validator {
 
     public boolean validateCreditCard(String cardNumber, String expireDate) {
         boolean validation;
+        Date date = new Date();
         int[] ints = new int[cardNumber.length()];
         for (int i = 0; i < cardNumber.length(); i++) {
             ints[i] = Integer.parseInt(cardNumber.substring(i, i + 1));
@@ -65,7 +66,7 @@ public class Validator {
             validation = false;
         }
         expireDate = expireDate.replace("/", "");
-        String now = new SimpleDateFormat("MMyy").format(new Date());
+        String now = new SimpleDateFormat("MMyy").format(date);
         if (expireDate.compareTo(now) < 0) {
             validation = false;
         }

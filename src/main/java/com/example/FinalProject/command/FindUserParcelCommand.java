@@ -1,8 +1,8 @@
 package com.example.FinalProject.command;
 
-import com.example.FinalProject.Constants;
+import com.example.FinalProject.Const;
 import com.example.FinalProject.DBException;
-import com.example.FinalProject.converter.UserConverter;
+import com.example.FinalProject.converter.UserConverterImpl;
 import com.example.FinalProject.dto.ParcelDto;
 import com.example.FinalProject.logic.ParcelService;
 import com.example.FinalProject.logic.Validator;
@@ -18,18 +18,19 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.UUID;
 
 
 @Controller
 public class FindUserParcelCommand {
     private static final Logger log = LogManager.getLogger(FindUserParcelCommand.class);
-    public String[] cities = Constants.CITIES;
+    public String[] cities = Const.CITIES;
 
     private ParcelDto parcelDto;
     @Autowired
     private ParcelService parcelService;
     @Autowired
-    private UserConverter userConverter;
+    private UserConverterImpl userConverterImpl;
 
     public void setParcelService(ParcelService parcelService) {
         this.parcelService = parcelService;
@@ -40,44 +41,44 @@ public class FindUserParcelCommand {
     public String execute (HttpServletRequest req, HttpServletResponse resp) throws DBException, ParseException {
         Validator validator = new Validator();
         String address;
-        if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
+        if (validator.validateRoleAddress(req, resp, req.getParameter(Const.ADDRESS)).equals("index.jsp")) {
             return "index.jsp";
         } else {
-            address = validator.validateRoleAddress(req, resp, req.getParameter("address"));
+            address = validator.validateRoleAddress(req, resp, req.getParameter(Const.ADDRESS));
         }
         int page;
-        if (req.getParameter("page") == null) {
+        if (req.getParameter(Const.PAGE) == null) {
             page = 1;
         } else {
-            page = Integer.parseInt(req.getParameter("page"));
+            page = Integer.parseInt(req.getParameter(Const.PAGE));
         }
         int recPerPage = 5;
         List parcels;
-        int userId = 0;
+        String userId = null;
         int sortColumnNumber = 0;
         String toPoint = null;
         String status;
         Date createDate = null;
         Date paymentDate = null;
         Date deliveryDate = null;
-        if (req.getParameter("sortColumnNumber") != null) {
-            sortColumnNumber = Integer.parseInt(req.getParameter("sortColumnNumber"));
+        if (req.getParameter(Const.SORT_COLUMN_NUMBER) != null) {
+            sortColumnNumber = Integer.parseInt(req.getParameter(Const.SORT_COLUMN_NUMBER));
         }
-        if (req.getParameter("userId") != null) {
-            userId = Integer.parseInt(req.getParameter("userId"));
+        if (req.getParameter(Const.USER_ID) != null) {
+            userId = req.getParameter(Const.USER_ID);
         }
-        if (req.getParameter("toPoint") != null && req.getParameter("toPoint") != "") {
-            toPoint = req.getParameter("toPoint");
+        if (req.getParameter(Const.TO_POINT) != null && req.getParameter(Const.TO_POINT) != "") {
+            toPoint = req.getParameter(Const.TO_POINT);
         }
-        status = req.getParameter("status");
+        status = req.getParameter(Const.STATUS);
         if (createDate != null) {
-            createDate = Date.valueOf(req.getParameter("createDate"));
+            createDate = Date.valueOf(req.getParameter(Const.CREATE_DATE));
         }
         if (paymentDate != null) {
-            paymentDate = Date.valueOf(req.getParameter("paymentDate"));
+            paymentDate = Date.valueOf(req.getParameter(Const.PAYMENT_DATE));
         }
-        if (req.getParameter("deliveryDate") != "" && req.getParameter("deliveryDate") != null) {
-            java.util.Date date = new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("deliveryDate"));
+        if (req.getParameter(Const.DELIVERY_DATE) != "" && req.getParameter(Const.DELIVERY_DATE) != null) {
+            java.util.Date date = new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter(Const.DELIVERY_DATE));
             System.out.println(date);
             deliveryDate = new java.sql.Date(date.getTime());
         }
@@ -101,6 +102,5 @@ public class FindUserParcelCommand {
         req.setAttribute("cities", cities);
         return address;
     }
-
 }
 

@@ -7,8 +7,8 @@ import java.sql.Date;
 import java.util.List;
 
 public interface ReceiptService {
-    boolean addReceipt(ReceiptDto receiptDto, List<ParcelDto> parcelsDto);
-    List<ReceiptDto> getReceipts(int id, int userId, String status, Date createDate, Date paymentDate, int sortColumnNumber);
-    boolean modifyReceipt(int id, String status);
+    void addReceipt(ReceiptDto receiptDto, List<ParcelDto> parcelsDto);
+    List<ReceiptDto> getReceipts(String id, String userId, String status, Date createDate, Date paymentDate, int sortColumnNumber);
+    boolean modifyReceipt (String id, String status);
 
 }

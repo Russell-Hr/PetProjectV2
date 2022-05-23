@@ -1,36 +1,41 @@
 package com.example.FinalProject.entity;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "parcel")
 @DynamicInsert
 @DynamicUpdate
-@Data
+@Getter
+@Setter
 @NamedQueries({
         @NamedQuery(name = "parcelsByUserIdAll",
-                query = "from Parcel p where p.userId=:userId"),
-        @NamedQuery(name = "parcelsByStatusAll",
-                query = "from Parcel p where p.status=:status"),
+                query = "from Parcel"),
+       @NamedQuery(name = "parcelsByStatusAll",
+                query = "from Parcel"),
         @NamedQuery(name = "parcelsByUserIdByStatus",
-                query = "from Parcel p where p.userId=:userId and p.status=:status")
+                query = "from Parcel"),
+        @NamedQuery(name = "parcelsByUserIdByReceiptId",
+                query = "from Parcel"),
+        @NamedQuery(name = "parcelsByUserIdWithReceipt",
+                query = "from Parcel")
 })
 public class Parcel implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    //private UUID id = UUID.randomUUID();
-    private int id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "id", columnDefinition = "CHAR(36)")
+    private String id;
 
     @Column(name = "fromPoint")
     private String fromPoint;
@@ -38,11 +43,9 @@ public class Parcel implements Serializable {
     @Column(name = "toPoint")
     private String toPoint;
 
-    //@Enumerated(EnumType.STRING)
     @Column(name = "deliveryAddress")
     private String deliveryAddress;
 
-    //@Enumerated(EnumType.STRING)
     @Column(name = "category")
     private String category;
 
@@ -67,9 +70,6 @@ public class Parcel implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "userId")
-    private int userId;
-
     @Column(name = "createDate")
     private Date createDate;
 
@@ -79,38 +79,10 @@ public class Parcel implements Serializable {
     @Column(name = "deliveryDate")
     private Date deliveryDate;
 
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
-    @JoinTable(name = "receipt_has_parcel",
-            joinColumns = @JoinColumn(name = "parcelId"),
-            inverseJoinColumns = @JoinColumn(name = "receiptId")
-    )
-    private List<Receipt> receipts = new ArrayList<>();
+    @ManyToOne
+    private Receipt receipt;
 
     @ManyToOne
     private User user;
 
-    @Override
-    public String toString() {
-        return "Parcel{" +
-                "id=" + id +
-                ", fromPoint='" + fromPoint + '\'' +
-                ", toPoint='" + toPoint + '\'' +
-                ", deliveryAddress='" + deliveryAddress + '\'' +
-                ", category='" + category + '\'' +
-                ", distance=" + distance +
-                ", length=" + length +
-                ", width=" + width +
-                ", height=" + height +
-                ", weight=" + weight +
-                ", price=" + price +
-                ", status='" + status + '\'' +
-                ", userId=" + userId +
-                ", createDate=" + createDate +
-                ", paymentDate=" + paymentDate +
-                ", deliveryDate=" + deliveryDate +
-                '}';
-    }
 }

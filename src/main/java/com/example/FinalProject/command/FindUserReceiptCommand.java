@@ -1,9 +1,8 @@
 package com.example.FinalProject.command;
 
+import com.example.FinalProject.Const;
 import com.example.FinalProject.DBException;
-import com.example.FinalProject.converter.UserConverter;
 import com.example.FinalProject.dto.ReceiptDto;
-import com.example.FinalProject.logic.ParcelService;
 import com.example.FinalProject.logic.ReceiptService;
 import com.example.FinalProject.logic.Validator;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.util.List;
+import java.util.UUID;
+
 @Controller
 public class FindUserReceiptCommand {
     private static final Logger log = LogManager.getLogger(FindUserReceiptCommand.class);
@@ -34,18 +35,18 @@ public class FindUserReceiptCommand {
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         Validator validator = new Validator();
         String address;
-        if (validator.validateRoleAddress(req, resp, req.getParameter("address")).equals("index.jsp")) {
+        if (validator.validateRoleAddress(req, resp, req.getParameter(Const.ADDRESS)).equals("index.jsp")) {
             return "index.jsp";
         } else {
-            address = validator.validateRoleAddress(req, resp, req.getParameter("address"));
+            address = validator.validateRoleAddress(req, resp, req.getParameter(Const.ADDRESS));
         }
 
         int page = 1;
         int recPerPage = 5;
-        if (req.getParameter("page") != null)
-            page = Integer.parseInt(req.getParameter("page"));
-        int id = 0;
-        int userId = 0;
+        if (req.getParameter(Const.PAGE) != null)
+            page = Integer.parseInt(req.getParameter(Const.PAGE));
+        String id = null;
+        String userId = null;
         int sortColumnNumber = 0;
         String toPoint = null;
         String status;
@@ -53,21 +54,21 @@ public class FindUserReceiptCommand {
         Date createDate = null;
         Date paymentDate = null;
         Date deliveryDate = null;
-        if (req.getParameter("sortColumnNumber") != null) {
-            sortColumnNumber = Integer.parseInt(req.getParameter("sortColumnNumber"));
+        if (req.getParameter(Const.SORT_COLUMN_NUMBER) != null) {
+            sortColumnNumber = Integer.parseInt(req.getParameter(Const.SORT_COLUMN_NUMBER));
         }
-        if (req.getParameter("userId") != null) {
-            userId = Integer.parseInt(req.getParameter("userId"));
+        if (req.getParameter(Const.USER_ID) != null) {
+            userId = req.getParameter(Const.USER_ID);
         }
-        if (req.getParameter("toPoint") != null) {
-            toPoint = req.getParameter("toPoint");
+        if (req.getParameter(Const.TO_POINT) != null) {
+            toPoint = req.getParameter(Const.TO_POINT);
         }
-        status = req.getParameter("status");
+        status = req.getParameter(Const.STATUS);
         if (createDate != null) {
-            createDate = Date.valueOf(req.getParameter("createDate"));
+            createDate = Date.valueOf(req.getParameter(Const.CREATE_DATE));
         }
         if (paymentDate != null) {
-            paymentDate = Date.valueOf(req.getParameter("paymentDate"));
+            paymentDate = Date.valueOf(req.getParameter(Const.PAYMENT_DATE));
         }
         receipts = receiptService.getReceipts(id, userId, status, createDate, paymentDate, sortColumnNumber);
         int startReceipt = page * recPerPage - recPerPage;

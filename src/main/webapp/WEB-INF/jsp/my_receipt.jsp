@@ -32,7 +32,7 @@
                     <li>
                         <form name="callback" method="get" action="${pageContext.request.contextPath}/app/logout">
                             <!--<input type="hidden" name="command" value="logout"/>-->
-                            <a href="#" alt="send" onclick="document.forms['callback'].submit();" >Вийти</a>
+                            <a href="#" alt="send" onclick="document.forms['callback'].submit();">Вийти</a>
                         </form>
                     </li>
                 </ul>
@@ -70,6 +70,9 @@
                         <div class=output_block>
                             КВИТАНЦІЯ № ${receipt.id}
                             <br>
+                            <br>
+                                ${receipt.receiptInfo}
+                            <br>
                             Статус: ${receipt.status}
                             <br>
                             <br>
@@ -85,7 +88,7 @@
                             <c:if test="${receipt.status == 'Approved'}">
                                 <br>
                                 <div class="btn-group">
-                                    <form action="${pageContext.request.contextPath}/app/modifyReceipt">
+                                    <form action="${pageContext.request.contextPath}/app/modifyReceipt" method="post">
                                         <!--<input type="hidden" name="command" value="modifyReceipt"/>-->
                                         <input type="hidden" name="address" value="my_receipt_start.jsp"/>
                                         <input type="hidden" name="userId" value="${loggedUser.id}"/>
@@ -94,7 +97,7 @@
                                         <input type="hidden" name="receiptStatus" value="Canceled"/>
                                         <button type="submit" class="btn btn-secondary">Відмінити</button>
                                     </form>
-                                    <form action="${pageContext.request.contextPath}/app/payReceipt">
+                                    <form action="${pageContext.request.contextPath}/app/payReceipt" method="get">
                                         <!--<input type="hidden" name="command" value="payReceipt"/>-->
                                         <input type="hidden" name="address" value="my_payment.jsp"/>
                                         <input type="hidden" name="userId" value="${loggedUser.id}"/>

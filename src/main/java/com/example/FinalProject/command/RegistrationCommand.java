@@ -1,10 +1,10 @@
 package com.example.FinalProject.command;
 
+import com.example.FinalProject.Const;
 import com.example.FinalProject.DBException;
-import com.example.FinalProject.converter.UserConverter;
+import com.example.FinalProject.converter.UserConverterImpl;
 import com.example.FinalProject.dao.UserDao;
 import com.example.FinalProject.dto.UserDto;
-import com.example.FinalProject.entity.User;
 import com.example.FinalProject.logic.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +25,7 @@ public class RegistrationCommand {
     @Autowired
     private UserService userService;
     @Autowired
-    private UserConverter userConverter;
+    private UserConverterImpl userConverterImpl;
     private UserDao userDao;
 
     public void setUserService(UserService userService) {
@@ -35,16 +35,14 @@ public class RegistrationCommand {
     @GetMapping(value = "/registration")
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws DBException {
         String address = "main.jsp";
-        String name = req.getParameter("name");
-        String surname = req.getParameter("surname");
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        String password2 = req.getParameter("password2");
+        String name = req.getParameter(Const.NAME);
+        String surname = req.getParameter(Const.SURNAME);
+        String login = req.getParameter(Const.LOGIN);
+        String password = req.getParameter(Const.PASSWORD);
+        String password2 = req.getParameter(Const.PASSWORD_2);
         if (password.equals(password2)) {
 
             UserDto userDto = userService.getUser(login);
-            //assert userDto != null;
-            //User user = userConverter.asUser(userDto);
             if (userDto != null) {
                 address = "error.jsp";
             } else {

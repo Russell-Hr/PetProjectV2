@@ -1,5 +1,6 @@
 package com.example.FinalProject.command;
 
+import com.example.FinalProject.Const;
 import com.example.FinalProject.entity.Parcel;
 import com.example.FinalProject.service.CalculateParcelParamService;
 import org.apache.logging.log4j.LogManager;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -22,17 +22,16 @@ public class CalculateParcelCommand {
 
     private static final Logger log = LogManager.getLogger(CalculateParcelCommand.class);
 
-
     @GetMapping(value = "/calculate")
     public String calculateParcelCommand
             (HttpServletRequest req,
-             @RequestParam("address") String address,
-             @RequestParam("fromPoint") String fromPoint,
-             @RequestParam("toPoint") String toPoint,
-             @RequestParam("length") int length,
-             @RequestParam("width") int width,
-             @RequestParam("height") int height,
-             @RequestParam("weight") double weight
+             @RequestParam(Const.ADDRESS) String address,
+             @RequestParam(Const.FROM_POINT) String fromPoint,
+             @RequestParam(Const.TO_POINT) String toPoint,
+             @RequestParam(Const.LENGTH) int length,
+             @RequestParam(Const.WIDTH) int width,
+             @RequestParam(Const.HEIGHT) int height,
+             @RequestParam(Const.WEIGHT) double weight
             ) {
 
         int amount = length * width * height;
@@ -48,9 +47,9 @@ public class CalculateParcelCommand {
         parcel.setDistance(distance);
         parcel.setPrice(price);
         if (distance != 0) {
-            req.getSession().setAttribute("calculatedParcel", parcel);
+            req.getSession().setAttribute(Const.CALCULATED_PARCEL, parcel);
         } else {
-            req.getSession().removeAttribute("calculatedParcel");
+            req.getSession().removeAttribute(Const.CALCULATED_PARCEL);
         }
         log.info("Calculate!!!");
         return address;
